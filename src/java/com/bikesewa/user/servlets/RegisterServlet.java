@@ -6,8 +6,9 @@ import com.bikesewa.entities.Message;
 import com.bikesewa.entities.User;
 import com.bikesewa.helper.ConnectionProvider;
 import java.io.IOException;
-import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +29,13 @@ public class RegisterServlet extends HttpServlet {
                 String address = request.getParameter("user_address");
                 String password = request.getParameter("user_password");
                 
+                // encoding using Base64
+                 Encoder encoder = Base64.getEncoder();
+                 String encpassword = encoder.encodeToString(password.getBytes());
+                
                 /// create user object and set all the data
                 
-                User user = new User(full_name,email,phone,gender,address,password);
+                User user = new User(full_name,email,phone,gender,address,encpassword);
                 
                 /// create user dao object
                 UserDao dao = new UserDao(ConnectionProvider.getCon());

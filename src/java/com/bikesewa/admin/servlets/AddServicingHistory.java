@@ -52,7 +52,7 @@ public class AddServicingHistory extends HttpServlet {
                     s.setAttribute("msg", msg);
      
                     }else{
-                     Message msg = new Message("Something Went Wrong Please Try agin!!", "error", "alert alert-danger");
+                      Message msg = new Message("Something Went Wrong Please Try agin!!", "error", "alert alert-danger");
                     HttpSession s = request.getSession();
                     s.setAttribute("msg", msg);
 

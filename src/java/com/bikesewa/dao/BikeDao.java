@@ -20,7 +20,7 @@ public class BikeDao {
         boolean f=false;
         try{
           
-            String q = "insert into bike(company, model, bike_img, color, bike_num, created_at,updated_at,uid) values(?,?,?,?,?,now(),now(),?)";  
+            String q = "insert into bike(company, model, bike_img, color, bike_num, created_at,updated_at,uid,cname,cemail) values(?,?,?,?,?,now(),now(),?,?,?)";  
             PreparedStatement prestm = this.con.prepareStatement(q);
             prestm.setString(1,bike.getCompany());
             prestm.setString(2,bike.getModel());
@@ -28,6 +28,8 @@ public class BikeDao {
             prestm.setString(4,bike.getColor());
             prestm.setString(5,bike.getBike_num());
             prestm.setInt(6,bike.getUid());
+            prestm.setString(7,bike.getCname());
+            prestm.setString(8,bike.getCemail());
            int row = prestm.executeUpdate();
             f=true;
             if(row>0)
@@ -65,7 +67,10 @@ public class BikeDao {
             String bike_num = set.getString("bike_num");
             Date created_at = set.getDate("created_at");
             Date updated_at = set.getDate("updated_at");
-            bike = new Bike(bid, company, model, bike_img, color, bike_num,  created_at, updated_at, uid);
+            String cname = set.getString("cname"); 
+            String cemail = set.getString("cemail");
+            
+            bike = new Bike(bid, company, model, bike_img, color, bike_num,  created_at, updated_at, uid, cname, cemail);
 
             }
 
@@ -85,14 +90,16 @@ public class BikeDao {
         boolean f = false;
         try {
 
-            String query = "update bike set company=? , model=? , bike_img=? , color=? ,bike_num=?, updated_at = now() where  bid =?";
+            String query = "update bike set company=? , model=? , bike_img=? , color=? ,bike_num=?, updated_at = now(), cname=?, cemail=? where  bid =?";
             PreparedStatement p = con.prepareStatement(query);
             p.setString(1, bike.getCompany());
             p.setString(2, bike.getModel());
             p.setString(3, bike.getBike_img());
             p.setString(4, bike.getColor());
             p.setString(5, bike.getBike_num());
-            p.setInt(6, bike.getBid());
+            p.setString(6, bike.getCname());
+            p.setString(7, bike.getCemail());
+            p.setInt(8, bike.getBid());
             
             p.executeUpdate();
             f = true;

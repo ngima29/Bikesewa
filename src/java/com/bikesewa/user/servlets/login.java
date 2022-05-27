@@ -6,6 +6,7 @@ import com.bikesewa.entities.User;
 import com.bikesewa.helper.ConnectionProvider;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,9 @@ public class login extends HttpServlet {
             //fetch email and password
             String userEmail = request.getParameter("email");
             String userPassword = request.getParameter("password");
+            
+             Base64.Encoder encoder = Base64.getEncoder();
+                 String encpassword = encoder.encodeToString(userPassword.getBytes());
              /// create user dao object
             if("admin@gmail.com".equals(userEmail) && "admin".equals(userPassword) ){
              //AdminDao adao = new AdminDao(ConnectionProvider.getCon());
@@ -33,7 +37,7 @@ public class login extends HttpServlet {
              
             }else{
              UserDao dao = new UserDao(ConnectionProvider.getCon());
-             User u = dao.getUserByEmailAndPassword(userEmail, userPassword);
+             User u = dao.getUserByEmailAndPassword(userEmail, encpassword);
               if (u == null) {
                  Message msg = new Message("Invalid Email or Password ! try with another", "error", "alert alert-danger");
   

@@ -7,6 +7,7 @@ import com.bikesewa.entities.User;
 import com.bikesewa.helper.ConnectionProvider;
 import java.io.IOException;
 import static java.lang.System.out;
+import java.util.Base64;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -23,29 +24,41 @@ public class AddCustomer extends HttpServlet {
             throws ServletException, IOException {
          
          if(request.getParameter("submit") != null){
-                String full_name = request.getParameter("full_name");
-                String email = request.getParameter("email");
-                String phone = request.getParameter("phone");
+                String full_name = request.getParameter("user_name");
+                String email = request.getParameter("user_email");
+                String phone = request.getParameter("user_phone");
                 String gender = request.getParameter("gender");
-                String address = request.getParameter("address");
-                String password = request.getParameter("salary");
+                String address = request.getParameter("user_address");
+                String password = request.getParameter("user_password");
+                
+                // encoding using Base64
+                 Base64.Encoder encoder = Base64.getEncoder();
+                 String encpassword = encoder.encodeToString(password.getBytes());
                 
                 /// create user object and set all the data
                 
-                User user = new User(full_name,email,phone,gender,address,password);
+                User user = new User(full_name,email,phone,gender,address,encpassword);
                 
+                
+                /// create user object and set all the data
+                
+     
                 /// create user dao object
                 UserDao dao = new UserDao(ConnectionProvider.getCon());
+                HttpSession s = request.getSession();
                 if(dao.saveUser(user)){
                    out.println("success");
-                    response.sendRedirect("login.jsp");
+                   Message msg = new Message("succesfully Register", "success", "alert alert-success");
+                   s.setAttribute("msg", msg);
+              
                     }else{
                      Message msg = new Message("Invalid Details ! try with another", "error", "alert alert-danger");
-                    HttpSession s = request.getSession();
+                    
                     s.setAttribute("msg", msg);
 
-                     response.sendRedirect("register.jsp");
-                }         
+                   
+                }   
+                      response.sendRedirect("admin_dashboard.jsp");
     }
 
         

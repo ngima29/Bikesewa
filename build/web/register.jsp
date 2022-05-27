@@ -132,10 +132,38 @@ function validateForm() {
     
     <body>
      
-        <main class="d-flex align-items-center" style="height: 100vh">
- <div class="container">
-   <div class="row mx-auto">
-     <div class="col-md-6 offset-md-2">
+        <main class="d-flex align-items-center bg-light" >
+          
+ <div class="container-fluid">
+     
+     
+  
+<div class="container">
+     <ul class="navbar list-unstyled">
+          <li class="logo">
+               <h2><a class="text-decoration-none" style="font-size:4rem; color:white; text-shadow: 2px 2px 8px #FF0000;" href="index.jsp"> Bike Sewa </a></h2>
+          </li>
+          <li>
+                <div class="d-flex">
+  <a class=" btn btn-danger btn-lg me-5"  href="login.jsp">Login</a>
+  
+      </div>
+          </li>
+     </ul>
+</div>   
+     
+<!--     <nav class="navbar navbar-light bg-success mb-5 mt-1">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.jsp">Bike Sewa</a>
+
+    <div class="d-flex">
+  <a class=" btn btn-danger btn-lg me-5"  href="login.jsp">Login</a>
+    
+      </div>
+  </div>
+</nav>-->
+   <div class="row mx-auto mt-5">
+     <div class="col-md-6 offset-md-3">
        <div class="card" >
            <div class="card-header bg-success text-white text-center">
             

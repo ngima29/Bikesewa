@@ -15,8 +15,11 @@ public class Bike {
      private Date  created_at ;
      private Date  updated_at ;
      private int uid;
+     private String cname;
+     private String cemail;
 
-    public Bike(int bid ,String company, String model, String bike_img, String color,String bike_num, Date created_at, Date updated_at,int uid) {
+    
+    public Bike(int bid, String company, String model, String bike_img, String color,String bike_num, Date created_at, Date updated_at, int uid, String cname,String cemail) {
         this.bid = bid;
         this.company = company;
         this.model = model;
@@ -25,30 +28,24 @@ public class Bike {
         this.bike_num=bike_num;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.uid =  uid;
-    }
-    public Bike(int id, String company, String model, String bike_img, String color,String bike_num, Date created_at, Date updated_at) {
-        this.bid = id;
-        this.company = company;
-        this.model = model;
-        this.bike_img = bike_img;
-        this.color = color;
-        this.bike_num=bike_num;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.uid = uid;
+        this.cname = cname;
+        this.cemail = cemail;
        
     }
 
-    public Bike(String company, String model, String bike_img, String color,String bike_num, int uid) {
+    public Bike(String company, String model, String bike_img, String color,String bike_num, int uid, String cname,String cemail) {
         this.company = company;
         this.model = model;
         this.bike_img = bike_img;
         this.color = color;
         this.bike_num=bike_num;
         this.uid = uid;
+        this.cname = cname;
+        this.cemail = cemail;
     }
     
-    public Bike(String company, String model, String bike_img, String color,String bike_num, Date created_at,int uid) {
+    public Bike(String company, String model, String bike_img, String color,String bike_num, Date created_at,int uid,String cname,String cemail) {
         this.company = company;
         this.model = model;
         this.bike_img = bike_img;
@@ -56,6 +53,8 @@ public class Bike {
         this.bike_num=bike_num;
         this.created_at = created_at;
         this.uid = uid;
+        this.cname = cname;
+        this.cemail = cemail;
     }
        
     
@@ -136,4 +135,20 @@ public class Bike {
     }
 
     
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
+
+    public String getCemail() {
+        return cemail;
+    }
+
+    public void setCemail(String cemail) {
+        this.cemail = cemail;
+    }
+
 }

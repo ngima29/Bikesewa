@@ -162,7 +162,7 @@ public class UserDao {
     public User getUserByUserId(int userId) {
         User user = null;
         try {
-            String q = "select * from user where id=?";
+            String q = "select * from user where uid=?";
             PreparedStatement ps = this.con.prepareStatement(q);
             ps.setInt(1, userId);
             ResultSet set = ps.executeQuery();

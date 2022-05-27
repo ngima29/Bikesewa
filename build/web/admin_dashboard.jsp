@@ -33,7 +33,20 @@
                                     background-color: black !important;
                                     color: white !important;
                                 }
-                            </style>
+                           
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
+                            
                             <title>admin dashboard</title>
                         </head>
 
@@ -56,8 +69,7 @@
                                         <div class="card card-left bg-light text-white" style="height: 90vh">
                                             <nav class="navbar navbar-light bg-light">
                                                 <div class="container-fluid">
-                                                    <a class="navbar-brand" href="#">
-                                                        <i class="fa fa-motorcycle" style="font-size: 36px"></i>
+                                                    <a class="navbar-brand" href="#" style="font-size:2rem; color:white; text-shadow: 2px 2px 8px #FF0000;">
                                                         Bike Sewa
                                                     </a>
                                                 </div>
@@ -374,7 +386,8 @@
                                                     </div>
                                                     <!-- accepted booking dashboard -->
                                                     <div class="rowmt-2">
-                                                        <h5>Accepted Booking</h5>
+                                                        
+                                                        <h4 class="mt-3 fw-bolder">Accepted Booking</h4>
                                                     </div>
                                                     <br />
                                                     <div class="row">
@@ -394,12 +407,19 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <% try {
+                                                                <%
+                                                                    int dabTotal = 0;
+                                                                        int dabstart = 0, dabrecordCount = 3;
+                                                                    try {
+                                                                         int dabpgno = request.getParameter("dabpgno") == null ? 0 : Integer.parseInt(request.getParameter("dabpgno"));
+                                                                            dabstart = dabpgno * dabrecordCount;
                                                                         Connection con = ConnectionProvider.getCon();
                                                                         Statement statement = con.createStatement();
-                                                                        String q
-                                                                                = "SELECT * FROM onlinebooking where booking_status = '1' ";
-                                                                        ResultSet resultSet = statement.executeQuery(q);
+                                                                        String q = "SELECT * FROM onlinebooking where booking_status = '1' limit ?,?";
+                                                                        PreparedStatement stmt = con.prepareStatement(q);
+                                                                            stmt.setInt(1, dabstart);
+                                                                            stmt.setInt(2, dabrecordCount);
+                                                                        ResultSet resultSet = stmt.executeQuery();
                                                                         while (resultSet.next()) {%>
                                                                 <tr>
                                                                     <td><%= resultSet.getString("obid")%></td>
@@ -424,9 +444,34 @@
                                                                     </td>
                                                                 </tr>
                                                                 <% }
-                                                                    } catch (Exception e) {
-                                                                        e.printStackTrace();
-                                                                    } %>
+                                                                            String sql = "select count(*) from onlinebooking";
+                                                                            PreparedStatement stmt1 = con.prepareStatement(sql);
+                                                                            ResultSet dab = stmt1.executeQuery();
+                                                                            if (dab.next()) {
+                                                                                dabTotal = dab.getInt(1);
+                                                                            }
+                                                                        } catch (Exception e) {
+                                                                            e.printStackTrace();
+                                                                        } %>
+                                                                    <tr>
+                                                                        <th colspan="9">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <% for (int i = 0; i <= dabTotal / dabrecordCount; i++) {%>
+                                                                                    <td>
+                                                                                        <a
+                                                                                            href="admin_dashboard.jsp?dabpgno=<%= i%>"
+                                                                                            class="btn btn-info"
+                                                                                            >
+                                                                                            Page <%= i + 1%>
+                                                                                        </a>
+                                                                                    </td>
+
+                                                                                    <% } %>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </th>
+                                                                    </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>    
@@ -454,14 +499,7 @@
                                                                 >
                                                                 Add New
                                                             </button>
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-danger"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#deleteCustomer"
-                                                                >
-                                                                Delete
-                                                            </button>
+                                                            <div class="mt-2">
                                                             <form action="" method="get">
                                                                 <input
                                                                     type="text"
@@ -470,6 +508,7 @@
                                                                     name="custSearch"
                                                                     />
                                                             </form>
+                                                                </div>
                                                             <!--  customer Button trigger modal  start-->
 
                                                             <div
@@ -494,7 +533,7 @@
                                                                                 <div class="card-body">
                                                                                     <!--FORM-->
                                                                                     <form
-                                                                                        action="Register"
+                                                                                        action="AddCustomer"
                                                                                         method="POST"
                                                                                         enctype="multipart/form-data"
                                                                                         >
@@ -504,7 +543,7 @@
                                                                                                     type="text"
                                                                                                     class="form-control"
                                                                                                     placeholder="Full Name"
-                                                                                                    name="full_name"
+                                                                                                    name="user_name"
                                                                                                     required
                                                                                                     />
                                                                                             </div>
@@ -513,7 +552,7 @@
                                                                                                     type="email"
                                                                                                     class="form-control"
                                                                                                     placeholder="Email"
-                                                                                                    name="email"
+                                                                                                    name="user_email"
                                                                                                     required
                                                                                                     />
                                                                                             </div>
@@ -525,7 +564,7 @@
                                                                                                     type="number"
                                                                                                     class="form-control"
                                                                                                     placeholder="Phone"
-                                                                                                    name="phone"
+                                                                                                    name="user_phone"
                                                                                                     required
                                                                                                     />
                                                                                             </div>
@@ -553,9 +592,9 @@
                                                                                         <div class="row">
                                                                                             <div class="col">
                                                                                                 <input
-                                                                                                    type="file"
+                                                                                                    type="password"
                                                                                                     class="form-control"
-                                                                                                    name="photo"
+                                                                                                    name="user_password"
                                                                                                     required
                                                                                                     />
                                                                                             </div>
@@ -564,7 +603,7 @@
                                                                                                     type="text"
                                                                                                     class="form-control"
                                                                                                     placeholder="Address"
-                                                                                                    name="address"
+                                                                                                    name="user_address"
                                                                                                     required
                                                                                                     />
                                                                                             </div>
@@ -599,7 +638,7 @@
                                                             </div>
                                                             <!-- Add Mechanic Button trigger modal  end-->
                                                             <!-- Update Mechanic Button trigger modal  start-->
-                                                            <div
+<!--                                                            <div
                                                                 class="modal fade"
                                                                 id="updateCustomer"
                                                                 tabindex="-1"
@@ -609,7 +648,7 @@
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <div class="modal-body">
-                                                                            <!-- form start -->
+                                                                             form start 
                                                                             <div class="card">
                                                                                 <div
                                                                                     class="card-header bg-success text-white text-center"
@@ -619,7 +658,7 @@
                                                                                     </h4>
                                                                                 </div>
                                                                                 <div class="card-body">
-                                                                                    <!--?####FORM-->
+                                                                                    ?####FORM
                                                                                     <form
                                                                                         action="Register"
                                                                                         method="POST"
@@ -709,10 +748,10 @@
                                                                                         </div>
                                                                                     </form>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div>-->
 
                                                                             <!-- updating form end -->
-                                                                        </div>
+<!--                                                                        </div>
                                                                         <div class="modal-footer">
                                                                             <button
                                                                                 type="button"
@@ -724,70 +763,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <!-- delete Mechanic button Trigger model end -->
-                                                            <!-- Delete Button trigger start -->
-                                                            <div
-                                                                class="modal fade"
-                                                                id="deleteCustomer"
-                                                                tabindex="-1"
-                                                                aria-labelledby="deleteCustomerLabel"
-                                                                aria-hidden="true"
-                                                                >
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-body">
-                                                                            <div class="card">
-                                                                                <div
-                                                                                    class="card-header bg-danger text-white text-center"
-                                                                                    >
-                                                                                    <h5 class="d-flex justify-content-center">
-                                                                                        Enter email to Delete
-                                                                                    </h5>
-                                                                                </div>
-                                                                                <div class="card-body">
-                                                                                    <form action="login" method="POST">
-                                                                                        <div class="mb-3">
-                                                                                            <label
-                                                                                                for="exampleInputEmail1"
-                                                                                                class="form-label"
-                                                                                                ><i class="fa fa-envelope-o"></i>
-                                                                                                Email</label
-                                                                                            >
-                                                                                            <input
-                                                                                                type="email"
-                                                                                                class="form-control"
-                                                                                                id="exampleInputEmail1"
-                                                                                                aria-describedby="emailHelp"
-                                                                                                required
-                                                                                                />
-                                                                                        </div>
-                                                                                        <div class="d-flex">
-                                                                                            <button
-                                                                                                type="submit"
-                                                                                                class="btn btn-danger me-5"
-                                                                                                >
-                                                                                                Delete
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button
-                                                                                type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal"
-                                                                                >
-                                                                                Close
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- delete trigger button end -->
-                                                            <!-- // add update delete end -->
+                                                            </div>-->
+                                                                                           
                                                         </div>
                                                         <br />
                                                         <div class="col">
@@ -828,7 +805,7 @@
                                                                                     = stmt.executeQuery();
                                                                             while (rs.next()) {%>
                                                                     <tr>
-                                                                        <td><%= rs.getString("uid")%></td>
+                                                                        <td class="cus_id"><%= rs.getString("uid")%></td>
                                                                         <td><%= rs.getString("created_at")%></td>
                                                                         <td><%= rs.getString("full_name")%></td>
                                                                         <td>
@@ -841,14 +818,8 @@
                                                                         <td><%= rs.getString("address")%></td>
 
                                                                         <td>
-                                                                            <button
-                                                                                type="button"
-                                                                                class="btn btn-warning mx-3 btn-sm"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#updateCustomer"
-                                                                                >
-                                                                                Update
-                                                                            </button>
+                                                                            <button type="button" class="btn btn-danger btn-sm del_cus" data-bs-toggle="modal" data-bs-target="#cusdelet">
+                                                            Delete </button>
                                                                         </td>
                                                                     </tr>
 
@@ -886,7 +857,28 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
+<!--                                            customer delete start -->
+                                                  <div class="modal fade" id="cusdelet" tabindex="-1" aria-labelledby="cusdelet" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="DeleteCustomer" method="Get">
+                                            
+                                            
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="admdelet">Do you want to Delete?</h5>
+                                            <input type="hidden" name="uid" id="pass_cus_id">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                             <button type="submit" class="btn btn-danger" >Delete</button>
+                                        </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+<!--                                             customer delete END -->
+                                            
                                                 <!--Online Booking started-->
                                                 <div
                                                     class="tab-pane fade"
@@ -916,13 +908,20 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <% try {
+                                                                <%
+                                                                    int obtotal = 0;
+                                                                    int obstart = 0, obrecordCount = 4;
+                                                                    
+                                                                    try {
+                                                                         int obpgno = request.getParameter("obpgno") == null ? 0 : Integer.parseInt(request.getParameter("obpgno"));
+                                                                            obstart = obpgno * obrecordCount;
                                                                         Connection con = ConnectionProvider.getCon();
                                                                         Statement statement = con.createStatement();
-                                                                        String q
-                                                                                = "SELECT * from onlinebooking";
-                                                                        ResultSet resultSet
-                                                                                = statement.executeQuery(q);
+                                                                        String q = "SELECT * from onlinebooking limit ?,?";
+                                                                         PreparedStatement stmt = con.prepareStatement(q);
+                                                                            stmt.setInt(1, obstart);
+                                                                            stmt.setInt(2, obrecordCount);
+                                                                        ResultSet resultSet = stmt.executeQuery();
                                                                         while (resultSet.next()) {%>
                                                                 <tr>
                                                                     <td><%= resultSet.getString("obid")%></td>
@@ -973,9 +972,34 @@
                                                                     </td>
                                                                 </tr>
                                                                 <% }
+                                                                String sql = "select count(*) from onlinebooking";
+                                                                            PreparedStatement stmt1 = con.prepareStatement(sql);
+                                                                            ResultSet onlinebook = stmt1.executeQuery();
+                                                                            if (onlinebook.next()) {
+                                                                                obtotal = onlinebook.getInt(1);
+                                                                            }
                                                                     } catch (Exception e) {
                                                                         e.printStackTrace();
                                                                     } %>
+                                                                    <tr>
+                                                                        <th colspan="9">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <% for (int i = 0; i <= obtotal / obrecordCount; i++) {%>
+                                                                                    <td>
+                                                                                        <a
+                                                                                            href="admin_dashboard.jsp?obpgno=<%= i%>"
+                                                                                            class="btn btn-info"
+                                                                                            >
+                                                                                            Page <%= i + 1%>
+                                                                                        </a>
+                                                                                    </td>
+
+                                                                                    <% } %>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </th>
+                                                                    </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -1856,13 +1880,19 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <% try {
+                                                                        <% 
+                                                                            int fTotal = 0;
+                                                                        int fstart = 0, frecordCount = 6;
+                                                                            try {
+                                                                                int fpgno = request.getParameter("fpgno") == null? 0 : Integer.parseInt(request.getParameter("fpgno"));
+                                                                            start = fpgno * recordCount;
                                                                                 Connection con = ConnectionProvider.getCon();
                                                                                 Statement statement = con.createStatement();
-                                                                                String q
-                                                                                        = "SELECT * from userfeedback";
-                                                                                ResultSet resultSet
-                                                                                        = statement.executeQuery(q);
+                                                                                String q = "SELECT * from userfeedback  limit ?,?";
+                                                                                PreparedStatement stmt = con.prepareStatement(q);
+                                                                            stmt.setInt(1, fstart);
+                                                                            stmt.setInt(2, frecordCount);
+                                                                                ResultSet resultSet   = stmt.executeQuery();
                                                                                 while (resultSet.next()) {%>
                                                                         <tr>
                                                                             <th><%= resultSet.getString("ufbid")%></th>
@@ -1881,9 +1911,34 @@
                                                                             </td>
                                                                         </tr>
                                                                         <% }
+                                                                             String sql = "select count(*) from userfeedback";
+                                                                            PreparedStatement stmt1 = con.prepareStatement(sql);
+                                                                            ResultSet ursf = stmt1.executeQuery();
+                                                                            if (ursf.next()) {
+                                                                                fTotal = ursf.getInt(1);
+                                                                            }
                                                                             } catch (Exception e) {
                                                                                 e.printStackTrace();
                                                                             } %>
+                                                                            <tr>
+                                                                        <th colspan="9">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <% for (int i = 0; i <= fTotal / frecordCount; i++) {%>
+                                                                                    <td>
+                                                                                        <a
+                                                                                            href="admin_dashboard.jsp?fpgno=<%= i%>"
+                                                                                            class="btn btn-info"
+                                                                                            >
+                                                                                            Page <%= i + 1%>
+                                                                                        </a>
+                                                                                    </td>
+
+                                                                                    <% } %>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </th>
+                                                                    </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -2074,16 +2129,22 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <% try {
+                                                                    <% 
+                                                                         int mTotal = 0;
+                                                                        int mstart = 0, mrecordCount = 6;
+                                                                        try {
+                                                                            int mpgno = request.getParameter("mpgno") == null ? 0 : Integer.parseInt(request.getParameter("mpgno"));
+                                                                            mstart = mpgno * mrecordCount;
                                                                             Connection con = ConnectionProvider.getCon();
                                                                             Statement statement = con.createStatement();
-                                                                            String q
-                                                                                    = "SELECT * from Mechanic";
-                                                                            ResultSet resultSet
-                                                                                    = statement.executeQuery(q);
+                                                                            String q = "SELECT * from Mechanic limit ?,?";
+                                                                             PreparedStatement stmt = con.prepareStatement(q);
+                                                                            stmt.setInt(1, mstart);
+                                                                            stmt.setInt(2, mrecordCount);
+                                                                            ResultSet resultSet = stmt.executeQuery();
                                                                             while (resultSet.next()) {%>
                                                                     <tr>
-                                                                        <th><%= resultSet.getString("mid")%></th>
+                                                                        <th class="mec_id"><%= resultSet.getString("mid")%></th>
                                                                         <td><%= resultSet.getString("created_at")%></td>
                                                                         <td><%= resultSet.getString("full_name")%></td>
                                                                         <td>
@@ -2105,24 +2166,64 @@
                                                                                 class="btn btn-warning mx-3 btn-sm"
                                                                                 >Update
                                                                             </a>
-                                                                            <a
-                                                                                href="DeleteMechanic?mid=<%= resultSet.getString("mid"
-                                                                                )%>"
-                                                                                type="button"
-                                                                                class="btn btn-danger btn-sm"
-                                                                                >Delete</a
-                                                                            >
+                                                                             <button type="button" class="btn btn-danger btn-sm del_mec" data-bs-toggle="modal" data-bs-target="#mecdelet">
+                                                            Delete </button>
                                                                         </td>
                                                                     </tr>
-                                                                    <% }
+                                                                     <% }
+                                                                            String sql = "select count(*) from Mechanic";
+                                                                            PreparedStatement stmt1 = con.prepareStatement(sql);
+                                                                            ResultSet mec = stmt1.executeQuery();
+                                                                            if (mec.next()) {
+                                                                                mTotal = mec.getInt(1);
+                                                                            }
                                                                         } catch (Exception e) {
                                                                             e.printStackTrace();
                                                                         } %>
+                                                                    <tr>
+                                                                        <th colspan="9">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <% for (int i = 0; i <= mTotal / mrecordCount; i++) {%>
+                                                                                    <td>
+                                                                                        <a
+                                                                                            href="admin_dashboard.jsp?mpgno=<%= i%>"
+                                                                                            class="btn btn-info"
+                                                                                            >
+                                                                                            Page <%= i + 1%>
+                                                                                        </a>
+                                                                                    </td>
+
+                                                                                    <% } %>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </th>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
                                                 </div>
+                 <!--delete mechnic starr-->
+                   <div class="modal fade" id="mecdelet" tabindex="-1" aria-labelledby="mecdelet" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="DeleteMechanic" method="Get"> 
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="mecdelet">Do you want to Delete?</h5>
+                                            <input type="hidden" name="mid" id="pass_mec_id">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                             <button type="submit" class="btn btn-danger" >Delete</button>
+                                        </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+							
+                                                     <!--delete mechnic end-->
 
                                                 <!-- Admin Details started  -->
                                                 <div
@@ -2303,16 +2404,22 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <% try {
+                                                                    <% 
+                                                                        int adTotal = 0;
+                                                                        int adstart = 0, adrecordCount = 6;
+                                                                        try {
+                                                                             int adpgno = request.getParameter("adpgno") == null ? 0 : Integer.parseInt(request.getParameter("adpgno"));
+                                                                            adstart = adpgno * adrecordCount;
                                                                             Connection con = ConnectionProvider.getCon();
                                                                             Statement statement = con.createStatement();
-                                                                            String q
-                                                                                    = "SELECT * from admin";
-                                                                            ResultSet rs
-                                                                                    = statement.executeQuery(q);
+                                                                            String q = "SELECT * from admin limit ?,?";
+                                                                            PreparedStatement stmt = con.prepareStatement(q);
+                                                                            stmt.setInt(1, adstart);
+                                                                            stmt.setInt(2, adrecordCount);
+                                                                            ResultSet rs = stmt.executeQuery();
                                                                             while (rs.next()) {%>
                                                                     <tr>
-                                                                        <th><%= rs.getString("aid")%></th>
+                                                                        <th class="adm_id"><%= rs.getString("aid")%></th>
                                                                         <td><%= rs.getString("created_at")%></td>
                                                                         <td><%= rs.getString("full_name")%></td>
                                                                         <td>
@@ -2326,35 +2433,79 @@
                                                                         <td><%= rs.getString("email")%></td>
                                                                         <td><%= rs.getString("gender")%></td>
                                                                         <td><%= rs.getString("address")%></td>
-                                                                        <td class="d-flex">
+                                                                        <td class="d-flex align-self-stretch">
                                                                             <a
                                                                                 href="updateAdmin.jsp?aid=<%= rs.getString("aid"
                                                                                 )%>"
                                                                                 target="_self"
                                                                                 type="button"
-                                                                                class="btn btn-warning mx-3 btn-sm"
+                                                                                class="btn btn-warning mx-3 btn-sm text-decoration-none"
                                                                                 >Update
-                                                                            </a>
-                                                                            <a
-                                                                                href="DeleteAdminServlet?aid=<%= rs.getString("aid"
-                                                                                )%>"
-                                                                                type="button"
-                                                                                class="btn btn-danger btn-sm"
-                                                                                >
-                                                                                Delete
-                                                                            </a>
+                                                                            </a>                                                                        
+                                                      <button type="button" class="btn btn-danger btn-sm del_adm" data-bs-toggle="modal" data-bs-target="#admdelet">
+                                                            Delete </button>
+                                                                             
                                                                         </td>
                                                                     </tr>
                                                                     <% }
+                                                                    String sql = "select count(*) from admin";
+                                                                            PreparedStatement stmt1 = con.prepareStatement(sql);
+                                                                            ResultSet adm = stmt1.executeQuery();
+                                                                            if (adm.next()) {
+                                                                                Total = adm.getInt(1);
+                                                                            }
                                                                         } catch (Exception e) {
                                                                             e.printStackTrace();
                                                                         }%>
+                                                                        <tr>
+                                                                        <th colspan="9">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <% for (int i = 0; i <= adTotal / adrecordCount; i++) {%>
+                                                                                    <td>
+                                                                                        <a
+                                                                                            href="admin_dashboard.jsp?adpgno=<%= i%>"
+                                                                                            class="btn btn-info"
+                                                                                            >
+                                                                                            Page <%= i + 1%>
+                                                                                        </a>
+                                                                                    </td>
+
+                                                                                    <% } %>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </th>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                <!--delete mecanic test start-->
+                                                 <div class="modal fade" id="admdelet" tabindex="-1" aria-labelledby="admdelet" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="DeleteAdminServlet" method="Get">
+                                            
+                                            
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="admdelet">Do you want to Delete?</h5>
+                                            <input type="hidden" name="aid" id="pass_adm_id">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                             <button type="submit" class="btn btn-danger" >Delete</button>
+<!--                                            <a type="button" class="btn btn-danger">Delete</a>-->
+                                        </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                                                <!--deletre mec end?-->
+                                                                                
+                                                                                
+                                                                                
                                                 <!-- Logout  started  -->
                                                 <div
                                                     class="modal fade"
@@ -2374,6 +2525,7 @@
                                                                     aria-label="Close"
                                                                     ></button>
                                                             </div>
+                                                            
                                                             <div class="modal-body">
                                                                 <p>Do you want to Logout?</p>
                                                             </div>
@@ -2408,13 +2560,51 @@
                                 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
                                 <script>
                                     $(document).ready(function () {
+                                        
                                         $('button[data-bs-toggle="pill"]').on("show.bs.tab", function (e) {
                                             localStorage.setItem("activeTab", $(e.target).attr("id"));
                                         });
+                                        
                                         var activeTab = localStorage.getItem("activeTab");
                                         if (activeTab) {
                                             $('#v-pills-tab button[id="' + activeTab + '"]').tab("show");
                                         }
+                                        
+//                                        delete modewl code
+//                                                delete admin 
+                                         $('.del_adm').click(function (e){
+                                             e.preventDefault();
+                                             
+                                             var adm_id = $(this).closest('tr').find('.adm_id').text();
+                                             
+                                             $('#pass_adm_id').val(adm_id);
+                                             $('#admdelet').modal('show');
+                                         
+                                         });
+                                         
+//                                         delete mechnic
+                                                      
+                                            $('.del_mec').click(function (e){
+                                             e.preventDefault();
+                                             
+                                             var mec_id = $(this).closest('tr').find('.mec_id').text();
+                                             
+                                             $('#pass_mec_id').val(mec_id);
+                                             $('#mecdelet').modal('show');
+                                         
+                                         });
+                                         
+//                                         delete customer
+                                         $('.del_cus').click(function (e){
+                                             e.preventDefault();
+                                             
+                                             var cus_id = $(this).closest('tr').find('.cus_id').text();
+                                             
+                                             $('#pass_cus_id').val(cus_id);
+                                             $('#cusdelet').modal('show');
+                                         
+                                         });
+                                         
                                     });
                                 </script>
                                 <script>

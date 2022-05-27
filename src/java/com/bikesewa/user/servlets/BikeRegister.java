@@ -53,11 +53,13 @@ public class BikeRegister extends HttpServlet {
             //get the user from the session...
             HttpSession s = request.getSession();
             User user = (User) s.getAttribute("currentUser");
+            String cname = user.getFull_name();
+            String cemail = user.getEmail();
 
             // create bike object and pass data into  bike object
             //creak bikedao object
             BikeDao dao = new BikeDao(ConnectionProvider.getCon());
-            Bike bike = new Bike(company, model, b_img, color, bike_number, user.getUid());
+            Bike bike = new Bike(company, model, b_img, color, bike_number, user.getUid(), cname, cemail);
 
 
             if (dao.saveBike(bike)) {

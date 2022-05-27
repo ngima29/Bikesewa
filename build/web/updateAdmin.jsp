@@ -14,7 +14,20 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
-  </head>
+  <style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
+    </head>
     
     <body>
      
@@ -50,15 +63,17 @@
     <input type="number" class="form-control" value="<%= a.getPhone() %>" name="phone" required>
   </div>
   <div class="col">
-  
-      <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="gender" value="Male">
-  <label class="form-check-label">Male</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="gender" value="Female">
-  <label class="form-check-label" >Female</label>
-</div>
+   <select
+                                                                                                        class="form-select"
+                                                                                                        id="autoSizingSelect"
+                                                                                                        name="gender"
+                                                                                                        required
+                                                                                                        >
+                                                                                                        <option selectedvalue="male">
+                                                                                                            Male
+                                                                                                        </option>
+                                                                                                        <option value="female">Female</option>
+                                                                                                    </select>
       
   </div>
    </div>   
@@ -68,7 +83,7 @@
     <input type="file" class="form-control" value="<%= a.getPhoto() %>" name="photo" required>
   </div>
   <div class="col">
-    <input type="number"  class="form-control" name="password" plceholder="Password" required>
+    <input type="password"  class="form-control" name="password" plceholder="Password" required>
   </div>
 </div> 
 <br>

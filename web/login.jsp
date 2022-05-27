@@ -23,8 +23,32 @@
         
         
        
-        <main class="d-flex align-items-center" style="height: 80vh">
- <div class="container">
+        <main class="d-flex align-items-center bg-light" >
+ <div class="container-fluid">
+<!--      <nav class="navbar navbar-light bg-success mb-5 mt-1">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.jsp"  style="font-size:4rem; color:white; text-shadow: 2px 2px 8px #FF0000;">Bike Sewa</a>
+
+    <div class="d-flex">
+  <a class="btn btn-danger btn-lg" href="register.jsp" role="button">Register Now</a> 
+      </div>
+    
+      </div>
+      </nav>--> 
+
+<div class="container">
+     <ul class="navbar list-unstyled">
+          <li class="logo">
+               <h2><a class="text-decoration-none" style="font-size:4rem; color:white; text-shadow: 2px 2px 8px #FF0000;" href="index.jsp"> Bike Sewa </a></h2>
+          </li>
+          <li>
+                <div class="d-flex">
+
+    <a class="btn btn-danger btn-lg" href="register.jsp" role="button">Register Now</a> 
+      </div>
+          </li>
+     </ul>
+</div>
    <div class="row">
      <div class="col-md-4 offset-md-4">
        <div class="card" >

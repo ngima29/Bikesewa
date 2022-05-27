@@ -64,6 +64,19 @@
                 document.getElementById("output").innerHTML = string;
             }
         </script>
+        <style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
     </head>
 
     <body class="bg-light">
@@ -92,10 +105,9 @@
 
                         <nav class="navbar navbar-light bg-light">
                             <div class="container-fluid">
-                                <a class="navbar-brand" href="#">
-                                    <i class=" fa fa-motorcycle " style="font-size:36px;"></i>
-                                    Bike Sewa
-                                </a>
+                                <a class="navbar-brand" href="#" style="font-size:3rem; color:white; text-shadow: 2px 2px 8px #FF0000;">
+                                   Bike Sewa
+                                 </a>
                             </div>
                         </nav>
                         <div class="card-body ">
@@ -697,11 +709,17 @@
                                             </thead>
                                             <tbody>
                                                 <%
+                                                     int Total = 0;
+                                                     int start = 0, recordCount = 6;
                                                     try {
+                                                        int pgno = request.getParameter("pgno") == null ? 0 : Integer.parseInt(request.getParameter("pgno"));
+                                                        start = pgno * recordCount;
                                                         Connection con = ConnectionProvider.getCon();
-                                                        String q = "SELECT s.sid, s.servicing_at, s.km , s.amount, m.full_name,  s.parts_changed FROM servicing_history s INNER JOIN  Mechanic m ON s.mid= m.mid WHERE s.uid = ?";
+                                                        String q = "SELECT s.sid, s.servicing_at, s.km , s.amount, m.full_name,  s.parts_changed FROM servicing_history s INNER JOIN  Mechanic m ON s.mid= m.mid WHERE s.uid = ? limit ?,?";
                                                         PreparedStatement pstmt = con.prepareStatement(q);
                                                         pstmt.setInt(1, uid);
+                                                        pstmt.setInt(2, start);
+                                                        pstmt.setInt(3, recordCount);
                                                         ResultSet resultSet = pstmt.executeQuery();
                                                         while (resultSet.next()) {
                                                 %>
@@ -715,13 +733,36 @@
                                                     <td><%= resultSet.getString("parts_changed")%></td>                              
 
                                                 </tr>
+ <% }
+                                                                            String sql = "select count(*) from servicing_history";
+                                                                            PreparedStatement stmt1 = con.prepareStatement(sql);
+                                                                            ResultSet urs = stmt1.executeQuery();
+                                                                            if (urs.next()) {
+                                                                                Total = urs.getInt(1);
+                                                                            }
+                                                                        } catch (Exception e) {
+                                                                            e.printStackTrace();
+                                                                        } %>
+                                                                    <tr>
+                                                                        <th colspan="9">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <% for (int i = 0; i <= Total / recordCount; i++) {%>
+                                                                                    <td>
+                                                                                        <a
+                                                                                            href="user_dashboard.jsp?pgno=<%= i%>"
+                                                                                            class="btn btn-info"
+                                                                                            >
+                                                                                            Page <%= i + 1%>
+                                                                                        </a>
+                                                                                    </td>
 
-                                                <% }
-                                                    } catch (Exception e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                %>                   
-
+                                                                                    <% } %>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </th>
+                                                                    </tr>
+                                               
                                             </tbody>
                                         </table>
                                     </div>

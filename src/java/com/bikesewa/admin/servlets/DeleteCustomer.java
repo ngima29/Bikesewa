@@ -1,15 +1,13 @@
 
 package com.bikesewa.admin.servlets;
 
-import com.bikesewa.dao.MechanicDao;
+
 import com.bikesewa.dao.UserDao;
-import com.bikesewa.entities.Mechanics;
 import com.bikesewa.entities.Message;
 import com.bikesewa.entities.User;
 import com.bikesewa.helper.ConnectionProvider;
 import com.bikesewa.helper.Helper;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,15 +21,17 @@ import javax.servlet.http.HttpSession;
 public class DeleteCustomer extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int uid = Integer.parseInt(request.getParameter("uid"));
-         UserDao userDao = new UserDao(ConnectionProvider.getCon());
-         User user = userDao.getUserByUserId(uid);
+         //UserDao userDao = new UserDao(ConnectionProvider.getCon());
+         UserDao ud = new UserDao(ConnectionProvider.getCon());
+         //User user = userDao.getUserByUserId(uid);
+         User user = ud.getUserByUserId(uid);
         String cusImg = user.getImage();
  
         try {
-            if(userDao.deleteUserById(uid)){
+            if(ud.deleteUserById(uid)){
                 
                 String  delCimg = "F:/6th sem/Project/BikeSewa/web/User_img/"+cusImg;               
 
@@ -43,7 +43,7 @@ public class DeleteCustomer extends HttpServlet {
                 HttpSession s = request.getSession();
                 s.setAttribute("msg", msg);
             }else{
-                Message msg = new Message("Invalid Details ! try with another", "error", "alert alert-danger");
+                Message msg = new Message("Can not delete this user  !!!", "error", "alert alert-danger");
                 HttpSession s = request.getSession();
                 s.setAttribute("msg", msg);
             }

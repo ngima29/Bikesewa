@@ -16,8 +16,10 @@ public class Servicinghistory {
      private int uid;
      private int bid;
      private int mid;
+     private String scname;
+     private String scemail;
 
-    public Servicinghistory(int sid, String bike_num, int km, int amount, Date servicing_at, String parts_changed, Date next_servicing, int next_km, int uid, int bid, int mid) {
+    public Servicinghistory(int sid, String bike_num, int km, int amount, Date servicing_at, String parts_changed, Date next_servicing, int next_km, int uid, int bid, int mid,String scname , String scemail) {
         this.sid = sid;
         this.bike_num = bike_num;
         this.km = km;
@@ -29,9 +31,11 @@ public class Servicinghistory {
         this.uid = uid;
         this.bid = bid;
         this.mid = mid;
+        this.scname = scname;
+        this.scemail = scemail;
     }
 
-    public Servicinghistory(String bike_num, int km, int amount, Date servicing_at, String parts_changed, Date next_servicing, int next_km, int uid, int bid, int mid) {
+    public Servicinghistory(String bike_num, int km, int amount, Date servicing_at, String parts_changed, Date next_servicing, int next_km, int uid, int bid, int mid, String scname , String scemail) {
         this.bike_num = bike_num;
         this.km = km;
         this.amount = amount;
@@ -42,6 +46,8 @@ public class Servicinghistory {
         this.uid = uid;
         this.bid = bid;
         this.mid = mid;
+        this.scname = scname;
+        this.scemail = scemail;
     }
 
     public Servicinghistory() {
@@ -133,6 +139,22 @@ public class Servicinghistory {
 
     public void setMid(int mid) {
         this.mid = mid;
+    }
+
+    public String getScname() {
+        return scname;
+    }
+
+    public void setScname(String scname) {
+        this.scname = scname;
+    }
+
+    public String getScemail() {
+        return scemail;
+    }
+
+    public void setScemail(String scemail) {
+        this.scemail = scemail;
     }
  
 }
