@@ -48,6 +48,32 @@ input[type=number] {
 </style>
                             
                             <title>admin dashboard</title>
+                            <script>
+            function bike_company()
+            {
+                var a = document.getElementById("input").value;
+                if (a === "Bajaj")
+                {
+                    var arr = ["Avenger-Street-150", "Avenger-Street-180", "Avenger-Street-220", "Discover-110", "Discover-125", "Discover-135", "Discover-150", "Platina-110", "Pulsar-150", "Pulsar-180", "Pulsar-220", "Pulsar-NS160", "Pulsar-NS200", "Pulsar-RS200", "V-12", "Bajaj-V-15", "Dominar-200", "Dominar-400"];
+                }
+                if (a === "Yamaha")
+                {
+                    var arr = ["FZ-25", "FZSV-20", "Fz-v3", "FZS-VI", "FZS-V2", "MT-15", "Saluto-RX", "YZF-RI", "YZF-RI", "YZF-R15", "YZF-R15-V2", "Ray-ZR-113", "Ray-street-125", "Fascino-113", "Fascino-125", "NMAX-155"];
+                }
+                if (a === "TVS")
+                {
+                    var arr = ["Apache-RR-310", "Apache-RTR-160", "Apache-RTR-160", "Apache-RTR-180", "Apache-RTR-200", "Jupiter", "TVS-Ntorq-125", "Stryker-125", "Stryker-125"];
+                }
+
+                var string = "";
+
+                for (i = 0; i < arr.length; i++)
+                {
+                    string=string+"<option value="+arr[i]+">"+arr[i]+"</option>";
+                }
+                document.getElementById("output").innerHTML = string;
+            }
+        </script>
                         </head>
 
                         <body class="bg-light">
@@ -415,7 +441,7 @@ input[type=number] {
                                                                             dabstart = dabpgno * dabrecordCount;
                                                                         Connection con = ConnectionProvider.getCon();
                                                                         Statement statement = con.createStatement();
-                                                                        String q = "SELECT * FROM onlinebooking where booking_status = '1' limit ?,?";
+                                                                        String q = "SELECT * FROM onlinebooking where booking_status = '1' ORDER BY obid DESC limit ?,?";
                                                                         PreparedStatement stmt = con.prepareStatement(q);
                                                                             stmt.setInt(1, dabstart);
                                                                             stmt.setInt(2, dabrecordCount);
@@ -773,7 +799,7 @@ input[type=number] {
                                                                 >
                                                                 <thead>
                                                                     <tr>
-                                                                        <th scope="col">SN</th>
+                                                                        <th scope="col">ID</th>
                                                                         <th scope="col">Register Date</th>
                                                                         <th scope="col">Name</th>
                                                                         <th scope="col">Image</th>
@@ -796,7 +822,7 @@ input[type=number] {
                                                                                     = ConnectionProvider.getCon();
                                                                             Statement statement
                                                                                     = con.createStatement();
-                                                                            String q = "select * from user limit ?,?";
+                                                                            String q = "select * from user  ORDER BY uid DESC limit ?,?";
                                                                             PreparedStatement stmt
                                                                                     = con.prepareStatement(q);
                                                                             stmt.setInt(1, start);
@@ -917,7 +943,8 @@ input[type=number] {
                                                                             obstart = obpgno * obrecordCount;
                                                                         Connection con = ConnectionProvider.getCon();
                                                                         Statement statement = con.createStatement();
-                                                                        String q = "SELECT * from onlinebooking limit ?,?";
+                                                                        
+                                                                        String q = "SELECT * from onlinebooking where booking_status IS NULL ORDER BY obid DESC limit ?,?";
                                                                          PreparedStatement stmt = con.prepareStatement(q);
                                                                             stmt.setInt(1, obstart);
                                                                             stmt.setInt(2, obrecordCount);
@@ -972,7 +999,7 @@ input[type=number] {
                                                                     </td>
                                                                 </tr>
                                                                 <% }
-                                                                String sql = "select count(*) from onlinebooking";
+                                                                String sql = "select count(*) from onlinebooking where booking_status IS NULL";
                                                                             PreparedStatement stmt1 = con.prepareStatement(sql);
                                                                             ResultSet onlinebook = stmt1.executeQuery();
                                                                             if (onlinebook.next()) {
@@ -1024,14 +1051,14 @@ input[type=number] {
                                                                 >
                                                                 Add New Bike
                                                             </button>
-                                                            <button
+<!--                                                            <button
                                                                 type="button"
                                                                 class="btn btn-danger"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#deleteBike"
                                                                 >
                                                                 Delete
-                                                            </button>
+                                                            </button>-->
 
                                                             <!-- Add Mechanic Button trigger modal  start-->
 
@@ -1055,97 +1082,106 @@ input[type=number] {
                                                                                     </h5>
                                                                                 </div>
                                                                                 <div class="card-body">
-                                                                                    <form
-                                                                                        action="BikeRegister"
-                                                                                        method="POST"
-                                                                                        enctype="multipart/form-data"
-                                                                                        >
-                                                                                        <div class="row">
-                                                                                            <div class="col">
-                                                                                                <label class="form-label">Company*</label>
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="Bajaj"
-                                                                                                    name="company"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                            <div class="col">
-                                                                                                <label class="form-label">Model*</label>
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="Bajaj pulsar NS 200"
-                                                                                                    name="model"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <br />
-                                                                                        <div class="row">
-                                                                                            <div class="col">
-                                                                                                <label class="form-label">Picture</label>
-                                                                                                <input
-                                                                                                    type="file"
-                                                                                                    class="form-control"
-                                                                                                    name="bike_img"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                            <div class="col">
-                                                                                                <label class="form-label">Color*</label>
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="Red"
-                                                                                                    name="color"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <br />
-                                                                                        <div class="row">
-                                                                                            <div class="col">
-                                                                                                <label class="form-label"
-                                                                                                       >Bike Number*</label
-                                                                                                >
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="(STATE 3 01 001 PA 1010) OR (BA 34 PA 359)"
-                                                                                                    name="bike_number"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <br />
-                                                                                        <div class="row">
-                                                                                            <div class="col">
-                                                                                                <label class="form-label"
-                                                                                                       >Customer Id*</label
-                                                                                                >
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="Enter Customer Id"
-                                                                                                    name="uid"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                            <div class="col"></div>
-                                                                                        </div>
-                                                                                        <br />
-                                                                                        <div class="d-flex">
-                                                                                            <button
-                                                                                                type="submit"
-                                                                                                class="btn btn-danger me-5"
-                                                                                                name="submit"
-                                                                                                >
-                                                                                                Submit
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </form>
+                                                                                   <form onsubmit="return BikeFormValid()" action="AddBikeadmin" method="POST" enctype="multipart/form-data">
+
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <label  class="form-label">Company*</label>
+                                                                                <select class="form-control" id="input" onchange="bike_company()" name="company" required >
+                                                                                    <option>select Company</option>
+                                                                                    <option value="Bajaj">Bajaj</option>
+                                                                                    <option value="Yamaha">Yamaha</option>
+                                                                                    <option value="TVS">TVS</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <label  class="form-label">Model*</label>
+                                                                                <select id="output" class="form-control" onchange="bike_company1()" name="model" required > </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <label  class="form-label">Picture</label>
+                                                                                <input type="file" class="form-control"  name="bike_img" required>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <label  class="form-label">Color*</label>
+                                                                                <input type="text" class="form-control" placeholder="Red"  maxlength="7" name="color" required>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <br>
+<!--                                                                        // bike type check -->
+                                                                        <script type="text/javascript">
+                                                                            function ShowHideBikeNum(chkStateBike) {
+                                                                                var stateBike = document.getElementById("stateBike");
+                                                           
+                                                                                stateBike.style.display = chkStateBike.checked ? "block" : "none";
+                                                                                stateBike.attributes.required = chkStateBike.checked ? "required" : "";
+                                                                                // default bike hidike
+                                                                                var DefaultBikNum = document.getElementById("DefaultBikNum");
+                                                                                var bikeNum = document.getElementById('bikeNum');
+                                                                                
+
+                                                                                bikeNum.placeholder = chkStateBike.checked ? "01 001 PA 1010" : "BA 34 PA 359";
+                                                                                var staste = document.getElementById("stateInput");
+                                                                                var stateValue = staste.options[select.selectedIndex].value;
+                                                                                
+                                                                                var bothBikeNum = document.getElementById("bikeNum").value;
+                                                                                document.getElementById("oldbike").value = chkStateBike.checked ?"stateValue" + " " + "bothBikeNum"  : "bothBikeNum";
+                                                                                                                                        
+                                                                            }   
+                                                                        </script>
+                                                                        <div class="row">
+                                                                            <div class="col" id="DefaultBikNum">
+                                                                                <label  class="form-label">Bike Number*</label>
+                                                                                <input type="text" class="form-control" placeholder="BA 34 PA 359" name="bike_number" id="bikeNum"  maxlength="18" required>
+<!--                                                                                <input type="text" class="form-control" style="display:none;" name="bike_number_final" id="bikeNumFinal">-->
+
+                                                                                <span class="error text-danger font-weight-bold" id="BikeErr"></span>
+                                                                            </div>
+                                                                        </div> 
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <label for="chkStateBike" class="form-label">
+                                                                                    <input type="checkbox" name="checkbx" id="chkStateBike" onclick="ShowHideBikeNum(this)" />
+                                                                                    New Bike Number System (STATE 3 01 001 PA 1010)
+                                                                                </label>
+                                                                                <div id="stateBike" style="display: none" class="row">
+                                                                                    <div class="col">
+                                                                                        <select id="stateInput" class="form-control" name="stateInput" >
+                                                                                            <option value="STATE 1">STATE 1</option>
+                                                                                            <option value="STATE 2">STATE 2</option>
+                                                                                            <option value="STATE 3">STATE 3</option>
+                                                                                            <option value="STATE 4">STATE 4</option>
+                                                                                            <option value="STATE 5">STATE 5</option>
+                                                                                            <option value="STATE 6">STATE 6</option>
+                                                                                            <option value="STATE 7">STATE 7</option>
+                                                                                        </select>
+                                                                                    </div> 
+                                                                                </div>
+                                                                                <!-- end check box -->
+                                                                            </div>
+                                                                        </div>
+                                                                        <br>
+                                                                         <div class="row">
+                                                                            <div class="col">
+                                                                                <label  class="form-label">Customer ID</label>
+                                                                             
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                
+                                                                                <input type="number" class="form-control"  name="bcid" onKeyPress="if (this.value.length == 4) return false;" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <br>
+
+                                                                        <div class="d-flex ">         
+                                                                            <button type="submit" class="btn btn-danger me-5" name="submit">Submit</button>
+                                                                        </div>
+
+                                                                    </form>
                                                                                 </div>
                                                                             </div>
 
@@ -1176,92 +1212,7 @@ input[type=number] {
                                                                     <div class="modal-content">
                                                                         <div class="modal-body">
                                                                             <!-- form start -->
-                                                                            <div class="card">
-                                                                                <div
-                                                                                    class="card-header bg-success text-white text-center"
-                                                                                    >
-                                                                                    <h5 class="d-flex justify-content-center">
-                                                                                        Update Bike
-                                                                                    </h5>
-                                                                                </div>
-                                                                                <div class="card-body">
-                                                                                    <form
-                                                                                        action="BikeRegister"
-                                                                                        method="POST"
-                                                                                        enctype="multipart/form-data"
-                                                                                        >
-                                                                                        <div class="row">
-                                                                                            <div class="col">
-                                                                                                <label class="form-label">Company*</label>
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="Bajaj"
-                                                                                                    name="company"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                            <div class="col">
-                                                                                                <label class="form-label">Model*</label>
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="Bajaj pulsar NS 200"
-                                                                                                    name="model"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <br />
-                                                                                        <div class="row">
-                                                                                            <div class="col">
-                                                                                                <label class="form-label">Picture</label>
-                                                                                                <input
-                                                                                                    type="file"
-                                                                                                    class="form-control"
-                                                                                                    name="bike_img"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                            <div class="col">
-                                                                                                <label class="form-label">Color*</label>
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="Red"
-                                                                                                    name="color"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <br />
-                                                                                        <div class="row">
-                                                                                            <div class="col">
-                                                                                                <label class="form-label"
-                                                                                                       >Bike Number*</label
-                                                                                                >
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="(STATE 3 01 001 PA 1010) OR (BA 34 PA 359)"
-                                                                                                    name="bike_number"
-                                                                                                    required
-                                                                                                    />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <br />
-                                                                                        <div class="d-flex">
-                                                                                            <button
-                                                                                                type="submit"
-                                                                                                class="btn btn-danger me-5"
-                                                                                                name="submit"
-                                                                                                >
-                                                                                                Submit
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
+                                                                          
 
                                                                             <!-- updating form end -->
                                                                         </div>
@@ -1347,7 +1298,7 @@ input[type=number] {
                                                                 <thead>
                                                                     <tr>
                                                                         <th scope="col">ID</th>
-                                                                        <th scope="col">Date</th>
+<!--                                                                        <th scope="col">Date</th>-->
                                                                         <th scope="col">Company</th>
                                                                         <th scope="col">Model</th>
                                                                         <th scope="col">Bike Num</th>
@@ -1363,15 +1314,15 @@ input[type=number] {
                                                                             Connection con = ConnectionProvider.getCon();
                                                                             Statement statement = con.createStatement();
                                                                             String q
-                                                                                    = "SELECT b.bid, b.company, b.model, b.bike_img, b.color,                                                                b.bike_num, b.created_at, u.full_name , u.email FROM bike b JOIN user u ON b.bid = u.uid ";
+                                                                                    = "select * from bike ORDER BY bid DESC ";
                                                                             ResultSet resultSet
                                                                                     = statement.executeQuery(q);
                                                                             while (resultSet.next()) {%>
 
                                                                     <tr>
-                                                                        <td><%= resultSet.getString("bid")%></td>
-                                                                        <td><%= resultSet.getString("created_at")%></td>
-                                                                        <td><%= resultSet.getString("company")%></td>
+                                                                        <td class="bike_id"><%= resultSet.getString("bid")%></td>
+<!--                                                                        <td><%= resultSet.getString("created_at")%></td>-->
+                                                                        <td ><%= resultSet.getString("company")%></td>
                                                                         <td><%= resultSet.getString("model")%></td>
                                                                         <td><%= resultSet.getString("bike_num")%></td>
                                                                         <td><%= resultSet.getString("color")%></td>
@@ -1380,17 +1331,18 @@ input[type=number] {
                                                                                 src="Bike_img/<%=resultSet.getString("bike_img")%>"
                                                                                 style="width:40px; height: 20px;">
                                                                         </td>
-                                                                        <td><%= resultSet.getString("full_name")%></td>
-                                                                        <td><%= resultSet.getString("email")%></td>
-                                                                        <td>
-                                                                            <button
+                                                                        <td><%= resultSet.getString("cname")%></td>
+                                                                        <td><%= resultSet.getString("cemail")%></td>
+                                                                         <td class="d-flex align-self-stretch">
+                                                                            <a
+                                                                                href="updatebike.jsp?uid=<%= resultSet.getString("uid") %>"
+                                                                                target="_self"
                                                                                 type="button"
-                                                                                class="btn btn-warning mx-3 btn-sm"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#updateBike"
-                                                                                >
-                                                                                Update
-                                                                            </button>
+                                                                                class="btn btn-warning mx-3 btn-sm text-decoration-none"
+                                                                                >Update
+                                                                            </a>                                                                        
+                                                      <button type="button" class="btn btn-danger btn-sm del_bike " data-bs-toggle="modal" data-bs-target="#bikedelete"> Delete </button>
+                                                                             
                                                                         </td>
                                                                     </tr>
                                                                     <% }
@@ -1402,7 +1354,32 @@ input[type=number] {
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                    
+                                                  <!--delete bike start--> 
+                                                  <div class="modal fade" id="bikedelete" tabindex="-1" aria-labelledby="lbikedelete" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="DeleteBikeAdmServ" method="Get"> 
+										
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="bikedelete">Do you want to Delete?</h5>
+                                            <input type="hidden" name="bid" id="pass_bike_id">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                             <button type="submit" class="btn btn-danger" >Delete</button>
+                                        </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                                                  
+                                                  <!--delete bike end--> 
+                                                  
+                                                                
+                                                                
+                                                                
                                                 <!-- Servicing History started  -->
                                                 <div
                                                     class="tab-pane fade"
@@ -1422,7 +1399,7 @@ input[type=number] {
                                                                 >
                                                                 Add Servicing
                                                             </button>
-                                                            <button
+<!--                                                            <button
                                                                 type="button"
                                                                 class="btn btn-warning mx-3 btn-sm"
                                                                 data-bs-toggle="modal"
@@ -1437,7 +1414,7 @@ input[type=number] {
                                                                 data-bs-target="#deleteServicing"
                                                                 >
                                                                 Delete
-                                                            </button>
+                                                            </button>-->
 
                                                             <!-- Add servicing Button trigger modal  start-->
 
@@ -1471,8 +1448,8 @@ input[type=number] {
                                                                                                 <input
                                                                                                     type="text"
                                                                                                     class="form-control"
-                                                                                                    placeholder="BA 99 PA 578"
-                                                                                                    name="bikeNum"
+                                                                                                    
+                                                                                                    name="bikeNum" maxlength="20"
                                                                                                     required
                                                                                                     />
                                                                                             </div>
@@ -1481,9 +1458,10 @@ input[type=number] {
                                                                                                 <input
                                                                                                     type="number"
                                                                                                     class="form-control"
-                                                                                                    placeholder="Rs 200"
+                                                                                                    
                                                                                                     name="amount"
-                                                                                                    required
+                                                                                                    required onKeyPress="if (this.value.length == 6) return false;"
+ 
                                                                                                     />
                                                                                             </div>
                                                                                         </div>
@@ -1494,21 +1472,22 @@ input[type=number] {
                                                                                                 <input
                                                                                                     type="number"
                                                                                                     class="form-control"
-                                                                                                    placeholder="1500"
+                                                                                                   
                                                                                                     name="Km"
-                                                                                                    required
+                                                                                                    required onKeyPress="if (this.value.length == 5) return false;"
+
                                                                                                     />
                                                                                             </div>
                                                                                             <div class="col">
                                                                                                 <label class="form-label"
-                                                                                                       >Customer ID*</label
+                                                                                                       >Customer Name*</label
                                                                                                 >
                                                                                                 <input
-                                                                                                    type="number"
+                                                                                                    type="text"
                                                                                                     class="form-control"
-                                                                                                    placeholder="1"
-                                                                                                    name="uid"
-                                                                                                    required
+                                                                                                    
+                                                                                                    name="cname"
+                                                                                                    required  maxlength="15" 
                                                                                                     />
                                                                                             </div>
                                                                                         </div>
@@ -1518,14 +1497,14 @@ input[type=number] {
                                                                                             <div class="col">
                                                                                                 <div class="row">
                                                                                                     <label class="form-label">
-                                                                                                        Bike ID*</label
+                                                                                                        Customer Id*</label
                                                                                                     >
                                                                                                     <input
                                                                                                         type="number"
                                                                                                         class="form-control"
-                                                                                                        placeholder="1"
-                                                                                                        name="bid"
-                                                                                                        required
+                                                                                                       onKeyPress="if (this.value.length == 4) return false;"
+                                                                                                        name="cid"
+                                                                                                        required  
                                                                                                         />
                                                                                                 </div>
                                                                                                 <div class="row">
@@ -1535,26 +1514,23 @@ input[type=number] {
                                                                                                     <input
                                                                                                         type="number"
                                                                                                         class="form-control"
-                                                                                                        placeholder="1"
+                                                                                                        
                                                                                                         name="mid"
-                                                                                                        required
+                                                                                                        required onKeyPress="if (this.value.length == 2) return false;"
                                                                                                         />
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="col">
-                                                                                                <label class="form-label"
-                                                                                                       >Parts Changed</label
-                                                                                                >
+                                                                                                <label class="form-label">Parts Changed</label>
                                                                                                 <textarea
                                                                                                     class="form-control"
-                                                                                                    placeholder="Parts change"
                                                                                                     name="partsChange"
                                                                                                     rows="4"
                                                                                                     cols="25"
                                                                                                     required
-                                                                                                    >
-                                                                                                </textarea>
+                                                                                                    maxlength="50"
+                                                                                                    ></textarea>
                                                                                             </div>
                                                                                         </div>
                                                                                         <br />
@@ -1817,18 +1793,16 @@ input[type=number] {
                                                                 <tbody>
                                                                     <% try {
                                                                             Connection con = ConnectionProvider.getCon();
-                                                                            String q2 = "SELECT s.sid, s.servicing_at, u.full_name,                      u.email, b.bike_num, s.amount, s.km ,s.next_km,                      s.next_servicing , s.parts_changed FROM servicing_history                      s JOIN user u ON s.sid = u.uid JOIN bike b ON b.bid =                      u.uid ";
-                                                                            PreparedStatement pstmt
-                                                                                    = con.prepareStatement(q2);
-                                                                            ResultSet rs
-                                                                                    = pstmt.executeQuery();
+                                                                            String q2 = "select * from servicing_history ORDER BY sid DESC; ";
+                                                                            PreparedStatement pstmt  = con.prepareStatement(q2);
+                                                                            ResultSet rs = pstmt.executeQuery();
                                                                             while (rs.next()) {%>
 
                                                                     <tr>
-                                                                        <th><%= rs.getString("sid")%></th>
+                                                                        <th class="ser_id"><%= rs.getString("sid")%></th>
                                                                         <td><%= rs.getString("servicing_at")%></td>
-                                                                        <td><%= rs.getString("full_name")%></td>
-                                                                        <td><%= rs.getString("email")%></td>
+                                                                        <td><%= rs.getString("scname")%></td>
+                                                                        <td><%= rs.getString("scemail")%></td>
                                                                         <td><%= rs.getString("bike_num")%></td>
                                                                         <td><%= rs.getString("amount")%></td>
                                                                         <td><%= rs.getString("km")%></td>
@@ -1836,14 +1810,16 @@ input[type=number] {
                                                                         <td><%= rs.getString("next_servicing")%></td>
                                                                         <td><%= rs.getString("parts_changed")%></td>
                                                                         <!--   <td class="d-flex">-->
-                                                                        <td>
-                                                                            <a href="#" class="btn btn btn-danger btn-sm"
-                                                                               >Delete</a
-                                                                            >
-                                                                            <br />
-                                                                            <a href="#" class="btn btn btn-warning btn-sm"
-                                                                               >update</a
-                                                                            >
+                                                                       <td class="d-flex align-self-stretch">
+                                                                            <a
+                                                                                href="updateServicing.jsp?sid=<%= rs.getString("sid") %>"
+                                                                                target="_self"
+                                                                                type="button"
+                                                                                class="btn btn-warning mx-3 btn-sm text-decoration-none"
+                                                                                >Update
+                                                                            </a>                                                                        
+                                                      <button type="button" class="btn btn-danger btn-sm del_ser " data-bs-toggle="modal" data-bs-target="#serdelete"> Delete </button>
+                                                                             
                                                                         </td>
                                                                     </tr>
                                                                     <% }
@@ -1855,6 +1831,28 @@ input[type=number] {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                                
+                            <!--delete servicing history start-->
+                            <div class="modal fade" id="serdelete" tabindex="-1" aria-labelledby="lserdelete" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="DeleteServicingHservelt" method="Get"> 
+										
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="serdelete">Do you want to Delete?</h5>
+                                            <input type="hidden" name="sid" id="pass_ser_id">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                             <button type="submit" class="btn btn-danger" >Delete</button>
+                                        </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                             <!--delete servicing history end-->
+                                                                
 
                                                 <!--Feedback started-->
                                                 <div
@@ -1870,7 +1868,7 @@ input[type=number] {
                                                                 <table class="table bg-white rounded shadow-sm table-hover">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th scope="col" width="5">SN</th>
+                                                                            <th scope="col" width="5">ID</th>
                                                                             <th scope="col">Date</th>
                                                                             <th scope="col">User ID</th>
                                                                             <th scope="col">Name</th>
@@ -1888,14 +1886,14 @@ input[type=number] {
                                                                             start = fpgno * recordCount;
                                                                                 Connection con = ConnectionProvider.getCon();
                                                                                 Statement statement = con.createStatement();
-                                                                                String q = "SELECT * from userfeedback  limit ?,?";
+                                                                                String q = "SELECT * from userfeedback ORDER BY ufid DESC limit ?,?";
                                                                                 PreparedStatement stmt = con.prepareStatement(q);
                                                                             stmt.setInt(1, fstart);
                                                                             stmt.setInt(2, frecordCount);
                                                                                 ResultSet resultSet   = stmt.executeQuery();
                                                                                 while (resultSet.next()) {%>
                                                                         <tr>
-                                                                            <th><%= resultSet.getString("ufbid")%></th>
+                                                                            <th><%= resultSet.getString("ufid")%></th>
                                                                             <td><%= resultSet.getString("created_at")%></td>
                                                                             <td><%= resultSet.getString("uid")%></td>
                                                                             <td><%= resultSet.getString("u_name")%></td>
@@ -2002,7 +2000,7 @@ input[type=number] {
                                                                                                     placeholder="Full Name"
                                                                                                     name="full_name"
                                                                                                     required
-                                                                                                    />
+                                                                                                    maxlength="20" />
                                                                                             </div>
                                                                                             <div class="col">
                                                                                                 <input
@@ -2010,7 +2008,7 @@ input[type=number] {
                                                                                                     class="form-control"
                                                                                                     placeholder="Email"
                                                                                                     name="email"
-                                                                                                    required
+                                                                                                    required maxlength="20"
                                                                                                     />
                                                                                             </div>
                                                                                         </div>
@@ -2022,7 +2020,7 @@ input[type=number] {
                                                                                                     class="form-control"
                                                                                                     placeholder="Phone"
                                                                                                     name="phone"
-                                                                                                    required
+                                                                                                    required  onKeyPress="if (this.value.length == 10) return false;"
                                                                                                     />
                                                                                             </div>
                                                                                             <div class="col">
@@ -2066,7 +2064,7 @@ input[type=number] {
                                                                                                     class="form-control"
                                                                                                     placeholder="Salary"
                                                                                                     name="salary"
-                                                                                                    required
+                                                                                                    required  onKeyPress="if (this.value.length == 6) return false;"
                                                                                                     />
                                                                                             </div>
                                                                                         </div>
@@ -2078,7 +2076,7 @@ input[type=number] {
                                                                                                     class="form-control"
                                                                                                     placeholder="Address"
                                                                                                     name="address"
-                                                                                                    required
+                                                                                                    required maxlength="15"
                                                                                                     />
                                                                                             </div>
                                                                                         </div>
@@ -2116,7 +2114,7 @@ input[type=number] {
                                                             <table class="table bg-white rounded shadow-sm table-hover">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th scope="col" width="5">SN</th>
+                                                                        <th scope="col" width="5">ID</th>
                                                                         <th scope="col">Date</th>
                                                                         <th scope="col">Name</th>
                                                                         <th scope="col">Picture</th>
@@ -2137,7 +2135,7 @@ input[type=number] {
                                                                             mstart = mpgno * mrecordCount;
                                                                             Connection con = ConnectionProvider.getCon();
                                                                             Statement statement = con.createStatement();
-                                                                            String q = "SELECT * from Mechanic limit ?,?";
+                                                                            String q = "SELECT * from Mechanic ORDER BY mid DESC limit ?,?";
                                                                              PreparedStatement stmt = con.prepareStatement(q);
                                                                             stmt.setInt(1, mstart);
                                                                             stmt.setInt(2, mrecordCount);
@@ -2278,7 +2276,7 @@ input[type=number] {
                                                                                                     class="form-control"
                                                                                                     placeholder="Full Name"
                                                                                                     name="full_name"
-                                                                                                    required
+                                                                                                    required  maxlength="20"
                                                                                                     />
                                                                                             </div>
                                                                                             <div class="col">
@@ -2286,7 +2284,7 @@ input[type=number] {
                                                                                                     type="email"
                                                                                                     class="form-control"
                                                                                                     placeholder="Email"
-                                                                                                    name="email"
+                                                                                                    name="email"  maxlength="20"
                                                                                                     required
                                                                                                     />
                                                                                             </div>
@@ -2298,7 +2296,7 @@ input[type=number] {
                                                                                                     type="number"
                                                                                                     class="form-control"
                                                                                                     placeholder="Phone"
-                                                                                                    name="phone"
+                                                                                                    name="phone" onKeyPress="if (this.value.length == 10) return false;"
                                                                                                     required
                                                                                                     />
                                                                                             </div>
@@ -2342,7 +2340,7 @@ input[type=number] {
                                                                                                     type="password"
                                                                                                     class="form-control"
                                                                                                     name="password"
-                                                                                                    required
+                                                                                                    required  maxlength="10"
                                                                                                     />
                                                                                             </div>
                                                                                         </div>
@@ -2353,7 +2351,7 @@ input[type=number] {
                                                                                                     type="text"
                                                                                                     class="form-control"
                                                                                                     placeholder="Address"
-                                                                                                    name="address"
+                                                                                                    name="address"  maxlength="15"
                                                                                                     required
                                                                                                     />
                                                                                             </div>
@@ -2392,7 +2390,7 @@ input[type=number] {
                                                             <table class="table bg-white rounded shadow-sm table-hover">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th scope="col" width="5">SN</th>
+                                                                        <th scope="col" width="5">ID</th>
                                                                         <th scope="col">Date</th>
                                                                         <th scope="col">Name</th>
                                                                         <th scope="col">Picture</th>
@@ -2412,14 +2410,14 @@ input[type=number] {
                                                                             adstart = adpgno * adrecordCount;
                                                                             Connection con = ConnectionProvider.getCon();
                                                                             Statement statement = con.createStatement();
-                                                                            String q = "SELECT * from admin limit ?,?";
+                                                                            String q = "SELECT * from admin ORDER BY aid DESC  limit ?,?";
                                                                             PreparedStatement stmt = con.prepareStatement(q);
                                                                             stmt.setInt(1, adstart);
                                                                             stmt.setInt(2, adrecordCount);
                                                                             ResultSet rs = stmt.executeQuery();
                                                                             while (rs.next()) {%>
                                                                     <tr>
-                                                                        <th class="adm_id"><%= rs.getString("aid")%></th>
+                                                                        <td class =" adm_id" ><%= rs.getString("aid")%></td>
                                                                         <td><%= rs.getString("created_at")%></td>
                                                                         <td><%= rs.getString("full_name")%></td>
                                                                         <td>
@@ -2435,15 +2433,13 @@ input[type=number] {
                                                                         <td><%= rs.getString("address")%></td>
                                                                         <td class="d-flex align-self-stretch">
                                                                             <a
-                                                                                href="updateAdmin.jsp?aid=<%= rs.getString("aid"
-                                                                                )%>"
+                                                                                href="updateAdmin.jsp?aid=<%= rs.getString("aid")%>"
                                                                                 target="_self"
                                                                                 type="button"
                                                                                 class="btn btn-warning mx-3 btn-sm text-decoration-none"
                                                                                 >Update
                                                                             </a>                                                                        
-                                                      <button type="button" class="btn btn-danger btn-sm del_adm" data-bs-toggle="modal" data-bs-target="#admdelet">
-                                                            Delete </button>
+                                                      <button type="button" class="btn btn-danger btn-sm del_adm " data-bs-toggle="modal" data-bs-target="#admdelet"> Delete </button>
                                                                              
                                                                         </td>
                                                                     </tr>
@@ -2481,8 +2477,8 @@ input[type=number] {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!--delete mecanic test start-->
-                                                 <div class="modal fade" id="admdelet" tabindex="-1" aria-labelledby="admdelet" aria-hidden="true">
+             <!--delete admin test start-->
+                             <div class="modal fade" id="admdelet" tabindex="-1" aria-labelledby="admdelet" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <form action="DeleteAdminServlet" method="Get">
@@ -2496,13 +2492,12 @@ input[type=number] {
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                              <button type="submit" class="btn btn-danger" >Delete</button>
-<!--                                            <a type="button" class="btn btn-danger">Delete</a>-->
                                         </div>
                                             </form>
                                     </div>
                                 </div>
                             </div>
-                                                <!--deletre mec end?-->
+                                                <!--deletre admin end?-->
                                                                                 
                                                                                 
                                                                                 
@@ -2571,16 +2566,8 @@ input[type=number] {
                                         }
                                         
 //                                        delete modewl code
-//                                                delete admin 
-                                         $('.del_adm').click(function (e){
-                                             e.preventDefault();
-                                             
-                                             var adm_id = $(this).closest('tr').find('.adm_id').text();
-                                             
-                                             $('#pass_adm_id').val(adm_id);
-                                             $('#admdelet').modal('show');
-                                         
-                                         });
+//                                                
+                                        
                                          
 //                                         delete mechnic
                                                       
@@ -2594,6 +2581,17 @@ input[type=number] {
                                          
                                          });
                                          
+//                                         delete admin
+                                          $('.del_adm').click(function (e){
+                                             e.preventDefault();
+                                             
+                                             var adm_id = $(this).closest('tr').find('.adm_id').text();
+                                             
+                                             $('#pass_adm_id').val(adm_id);
+                                             $('#admdelet').modal('show');
+                                         
+                                         });
+                                         
 //                                         delete customer
                                          $('.del_cus').click(function (e){
                                              e.preventDefault();
@@ -2602,6 +2600,30 @@ input[type=number] {
                                              
                                              $('#pass_cus_id').val(cus_id);
                                              $('#cusdelet').modal('show');
+                                         
+                                         });
+                                         
+//                                         delete bike
+    
+                                            $('.del_bike').click(function (e){
+                                             e.preventDefault();
+                                             
+                                             var b_id = $(this).closest('tr').find('.bike_id').text();
+                                             
+                                             $('#pass_bike_id').val(b_id);
+                                             $('#bikedelete').modal('show');
+                                         
+                                         });
+                                         
+//                                         delete servicing history
+                                           
+                                           $('.del_ser').click(function (e){
+                                             e.preventDefault();
+                                             
+                                             var s_id = $(this).closest('tr').find('.ser_id').text();
+                                             
+                                             $('#pass_ser_id').val(s_id);
+                                             $('#serdelete').modal('show');
                                          
                                          });
                                          

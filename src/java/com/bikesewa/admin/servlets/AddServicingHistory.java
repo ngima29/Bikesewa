@@ -2,8 +2,10 @@
 package com.bikesewa.admin.servlets;
 
 import com.bikesewa.dao.AddServicingHistoryDao;
+import com.bikesewa.dao.UserDao;
 import com.bikesewa.entities.Message;
 import com.bikesewa.entities.Servicinghistory;
+import com.bikesewa.entities.User;
 import com.bikesewa.helper.ConnectionProvider;
 import java.time.LocalDate;
 import java.io.IOException;
@@ -25,14 +27,19 @@ public class AddServicingHistory extends HttpServlet {
         String bike_num = request.getParameter("bikeNum");
         int amount = Integer.parseInt(request.getParameter("amount"));
         int km = Integer.parseInt(request.getParameter("Km"));
-        int uid = Integer.parseInt(request.getParameter("uid"));
-        int bid = Integer.parseInt(request.getParameter("bid"));
+        int scid = Integer.parseInt(request.getParameter("cid"));
+        String scname = request.getParameter("cname"); 
+        String scemail = null; 
         int mid = Integer.parseInt(request.getParameter("mid"));        
         String partsChnage = request.getParameter("partsChange");
+        
         int nextKm = km+2000;
         Date servicingDate =null;
         Date nextServicingDate =null;
         
+        UserDao udao = new UserDao(ConnectionProvider.getCon());
+        User u = udao.getUserByUserId(scid);
+        scemail = u.getEmail();
     
 
        LocalDate date = LocalDate.now();
@@ -41,8 +48,8 @@ public class AddServicingHistory extends HttpServlet {
        nextServicingDate = Date.valueOf(nextDate);
        
 	
-       System.out.println(bike_num + " " + km + " " + amount + " " + servicingDate + " " + partsChnage + " " + nextServicingDate+ " " +nextKm + " " + uid + " " + bid + " " +mid);
-     Servicinghistory servicinghistory = new Servicinghistory(bike_num,km,amount,servicingDate,partsChnage,nextServicingDate,nextKm,uid,bid,mid);
+       System.out.println(bike_num + " " + km + " " + amount + " " + servicingDate + " " + partsChnage + " " + nextServicingDate+ " " +nextKm + " " + scname + " " +scemail+ " "+ scid);
+     Servicinghistory servicinghistory = new Servicinghistory(bike_num,km,amount,servicingDate,partsChnage,nextServicingDate,nextKm,mid,scname,scemail,scid);
      
       AddServicingHistoryDao dao = new AddServicingHistoryDao(ConnectionProvider.getCon());
        if(dao.insertServicing(servicinghistory)){

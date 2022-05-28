@@ -1,4 +1,6 @@
 
+<%@page import="com.bikesewa.entities.User"%>
+<%@page import="com.bikesewa.dao.UserDao"%>
 <%@page import="com.bikesewa.entities.Bike"%>
 <%@page import="com.bikesewa.dao.BikeDao"%>
 <%@page import="com.bikesewa.helper.ConnectionProvider"%>
@@ -34,7 +36,9 @@
            <% 
                    int uid = Integer.parseInt(request.getParameter("uid"));
                    BikeDao bdo = new BikeDao(ConnectionProvider.getCon());
-                   Bike b = bdo.getBikeByUid(uid) ;         
+                   Bike b = bdo.getBikeByUid(uid) ;  
+                   UserDao udo = new UserDao(ConnectionProvider.getCon());
+                   User u = udo.getUserByUserId(uid);
                %>
           <form action="AddServicingHistory" method="POST">
 
@@ -57,7 +61,8 @@
   </div>
      <input type="hidden"  value="<%= b.getBike_num() %>" name="bikeNum"  >
      <input type="hidden"  value="<%= b.getBid() %>" name="bid"  >
-    <input type="hidden" value="<%= uid %>" name="uid">
+    <input type="hidden" value="<%= u.getFull_name() %>" name="scneme">
+    <input type="hidden" value="<%= u.getEmail() %>" name="scemail">
   
    
  

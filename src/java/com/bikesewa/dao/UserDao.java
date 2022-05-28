@@ -190,6 +190,39 @@ public class UserDao {
         return user;
     }
     
+    //get user by email
+     public User getUserByEmail(String uemail) {
+        User user = null;
+        try {
+            String q = "select * from user where email=?";
+            PreparedStatement ps = this.con.prepareStatement(q);
+            
+            ps.setString(1,uemail);
+            ResultSet set = ps.executeQuery();
+            if (set.next()) {
+                user = new User();
+
+//             data from db
+                 String name = set.getString("full_name");
+//             set to user object
+                user.setFull_name(name);
+                user.setUid(set.getInt("uid"));
+                user.setEmail(set.getString("email"));
+                user.setPhone(set.getString("phone"));
+                user.setGender(set.getString("gender"));
+                user.setAddress(set.getString("address"));
+                user.setPassword(set.getString("password"));
+                user.setCreated_at(set.getDate("created_at"));
+                user.setUpdated_at(set.getDate("updated_at"));
+                user.setImage(set.getString("image"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+    
     
     
      /// forgot password user

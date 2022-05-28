@@ -8,18 +8,18 @@ public class Servicinghistory {
     private int sid;
      private String bike_num;
      private int km;
+     private int scid;
      private int amount;
      private Date servicing_at;
      private String parts_changed;
      private Date next_servicing;
      private int next_km;
-     private int uid;
-     private int bid;
      private int mid;
      private String scname;
      private String scemail;
+     
 
-    public Servicinghistory(int sid, String bike_num, int km, int amount, Date servicing_at, String parts_changed, Date next_servicing, int next_km, int uid, int bid, int mid,String scname , String scemail) {
+    public Servicinghistory(int sid, String bike_num, int km, int amount, Date servicing_at, String parts_changed, Date next_servicing, int next_km, int mid,String scname , String scemail,int scid) {
         this.sid = sid;
         this.bike_num = bike_num;
         this.km = km;
@@ -28,14 +28,13 @@ public class Servicinghistory {
         this.parts_changed = parts_changed;
         this.next_servicing = next_servicing;
         this.next_km = next_km;
-        this.uid = uid;
-        this.bid = bid;
         this.mid = mid;
         this.scname = scname;
         this.scemail = scemail;
+        this.scid =  scid;
     }
 
-    public Servicinghistory(String bike_num, int km, int amount, Date servicing_at, String parts_changed, Date next_servicing, int next_km, int uid, int bid, int mid, String scname , String scemail) {
+    public Servicinghistory(String bike_num, int km, int amount, Date servicing_at, String parts_changed, Date next_servicing, int next_km, int mid, String scname , String scemail,int scid) {
         this.bike_num = bike_num;
         this.km = km;
         this.amount = amount;
@@ -43,11 +42,23 @@ public class Servicinghistory {
         this.parts_changed = parts_changed;
         this.next_servicing = next_servicing;
         this.next_km = next_km;
-        this.uid = uid;
-        this.bid = bid;
         this.mid = mid;
         this.scname = scname;
         this.scemail = scemail;
+        this.scid =  scid;
+    }
+    public Servicinghistory(String bike_num, int km, int amount, String parts_changed, Date next_servicing, int next_km, int mid, String scname , String scemail,int scid) {
+        this.bike_num = bike_num;
+        this.km = km;
+        this.amount = amount;
+        this.servicing_at = servicing_at;
+        this.parts_changed = parts_changed;
+        this.next_servicing = next_servicing;
+        this.next_km = next_km;
+        this.mid = mid;
+        this.scname = scname;
+        this.scemail = scemail;
+        this.scid =  scid;
     }
 
     public Servicinghistory() {
@@ -117,21 +128,6 @@ public class Servicinghistory {
         this.next_km = next_km;
     }
 
-    public int getUid() {
-        return uid;
-    }
-
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
-
-    public int getBid() {
-        return bid;
-    }
-
-    public void setBid(int bid) {
-        this.bid = bid;
-    }
 
     public int getMid() {
         return mid;
@@ -155,6 +151,14 @@ public class Servicinghistory {
 
     public void setScemail(String scemail) {
         this.scemail = scemail;
+    }
+
+    public int getScid() {
+        return scid;
+    }
+
+    public void setScid(int scid) {
+        this.scid = scid;
     }
  
 }

@@ -44,15 +44,15 @@
                 var a = document.getElementById("input").value;
                 if (a === "Bajaj")
                 {
-                    var arr = ["Avenger Street 150", "Avenger_Street_180", "Avenger Street 220", "Discover 110", "Discover 125", "Discover 135", "Discover 150", "Platina 110", "Pulsar 150", "Pulsar 180", "Pulsar 220", "Pulsar NS160", "Pulsar NS200", "Pulsar RS 200", "Bajaj V 12", "Bajaj V 15", "Dominar 200", "Dominar 400"];
+                    var arr = ["Avenger-Street-150", "Avenger-Street-180", "Avenger-Street-220", "Discover-110", "Discover-125", "Discover-135", "Discover-150", "Platina-110", "Pulsar-150", "Pulsar-180", "Pulsar-220", "Pulsar-NS160", "Pulsar-NS200", "Pulsar-RS200", "V-12", "Bajaj-V-15", "Dominar-200", "Dominar-400"];
                 }
                 if (a === "Yamaha")
                 {
-                    var arr = ["Yamaha FZ 25", "Yamaha FZSV 20", "Yamaha Fz v3", "Yamaha FZS VI", "Yamaha FZS V2", "Yamaha MT-15", "Yamaha Saluto", "Yamaha Saluto RX", "Yamaha YZF RI", "Yamaha YZF RI", "Yamaha YZF R15 S", "Yamaha YZF R15 V2", "Yamaha Ray ZR 113", "Yamaha Ray ZR street rally 125", "Yamaha Fascino 113", "Yamaha Fascino 125", "NMAX 155"];
+                    var arr = ["FZ-25", "FZSV-20", "Fz-v3", "FZS-VI", "FZS-V2", "MT-15", "Saluto-RX", "YZF-RI", "YZF-RI", "YZF-R15", "YZF-R15-V2", "Ray-ZR-113", "Ray-street-125", "Fascino-113", "Fascino-125", "NMAX-155"];
                 }
                 if (a === "TVS")
                 {
-                    var arr = ["TVS Apache RR 310", "TVS Apache RTR 160", "TVS Apache RTR 160", "TVS Apache RTR 180", "TVS Apache RTR 200", "TVS Jupiter", "TVS Ntorq 125", "TVS Stryker 125", "TVS XL 100", "TVS Stryker 125"];
+                    var arr = ["Apache-RR-310", "Apache-RTR-160", "Apache-RTR-160", "Apache-RTR-180", "Apache-RTR-200", "Jupiter", "TVS-Ntorq-125", "Stryker-125", "Stryker-125"];
                 }
 
                 var string = "";
@@ -385,12 +385,12 @@ input[type=number] {
                                                                      <div class="row">
                                                                     <div class="col">
                                                                          <span>Full Name</span>
-                                                                        <input type="text" class="form-control" value="<%= user.getFull_name() %>" name="full_name" autocomplete="off" maxlength="15"required>
+                                                                        <input type="text" class="form-control" value="<%= user.getFull_name() %>" name="full_name" autocomplete="off" maxlength="18" required>
                                                                         <span class="error text-danger font-weight-bold" id="nameErr"></span>
                                                                     </div>
                                                                     <div class="col">
                                                                          <span>Email</span>
-                                                                      <input type="email" class="form-control" value="<%= user.getEmail()%>" name="email" autocomplete="off" required>
+                                                                      <input type="email" class="form-control" value="<%= user.getEmail()%>" name="email" maxlength="18" autocomplete="off" required>
                                                                       <span class="error text-danger font-weight-bold" id="emailErr"></span>
                                                                     </div>
                                                                   </div>
@@ -398,20 +398,23 @@ input[type=number] {
                                                                    <div class="row">
                                                                     <div class="col">
                                                                          <span>Phone</span>
-                                                                      <input type="text" maxlength="10" class="form-control" value="<%= user.getPhone()%>" name="phone" autocomplete="off" required>
+                                                                      <input type="text" onKeyPress="if (this.value.length == 10) return false;" class="form-control" value="<%= user.getPhone()%>" name="phone" autocomplete="off" required>
                                                                       <span class="error text-danger font-weight-bold" id="mobileErr"></span>
                                                                     </div>
                                                                     <div class="col">
+                                                                         <span>Gender</span>
+                                                                    <select
+                                                                                                        class="form-select"
+                                                                                                        id="autoSizingSelect"
+                                                                                                        name="gender"
+                                                                                                        required
+                                                                                                        >
+                                                                                                        <option selectedvalue="male">
+                                                                                                            Male
+                                                                                                        </option>
+                                                                                                        <option value="female">Female</option>
+                                                                                                    </select>
                                                                     
-                                                                    <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="gender" value="Male" required>
-                                                                    <label class="form-check-label">Male</label>
-                                                                  </div>
-                                                                  <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="gender" value="Female" required>
-                                                                    <label class="form-check-label" >Female</label>
-                                                                  </div>
-                                                                  <span class="error text-danger font-weight-bold" id="genderErr"></span>
                                                                     </div>
                                                                      </div>   
 
@@ -424,7 +427,7 @@ input[type=number] {
                                                                     </div>
                                                                     <div class="col">
                                                                       <span>Password</span>
-                                                                    <input type="password" class="form-control"  name="password" autocomplete="off"  required>
+                                                                    <input type="password" class="form-control"  name="password" autocomplete="off" maxlength="10" required>
                                                                     
                                                                   <!--    <span class="error text-danger font-weight-bold" id="passwordErr"></span>-->
                                                                     </div>
@@ -487,11 +490,11 @@ input[type=number] {
                                                     int uid = user.getUid();
                                                     try {
                                                         Connection con = ConnectionProvider.getCon();
-                                                        String q2 = "select next_servicing, next_km from servicing_history where uid=?";
+                                                        String q2 = "select next_servicing, next_km from servicing_history where uid=? ORDER BY sid DESC LIMIT 1";
                                                         PreparedStatement pstmt = con.prepareStatement(q2);
                                                         pstmt.setInt(1, uid);
                                                         ResultSet resultSet = pstmt.executeQuery();
-                                                        while (resultSet.next()) {
+                                                        if(resultSet.next()) {
                                                 %>
                                                 <tr>
                                                     <th scope="row"> 
@@ -715,7 +718,7 @@ input[type=number] {
                                                         int pgno = request.getParameter("pgno") == null ? 0 : Integer.parseInt(request.getParameter("pgno"));
                                                         start = pgno * recordCount;
                                                         Connection con = ConnectionProvider.getCon();
-                                                        String q = "SELECT s.sid, s.servicing_at, s.km , s.amount, m.full_name,  s.parts_changed FROM servicing_history s INNER JOIN  Mechanic m ON s.mid= m.mid WHERE s.uid = ? limit ?,?";
+                                                        String q = "SELECT * FROM servicing_history WHERE scid = ? limit ?,?";
                                                         PreparedStatement pstmt = con.prepareStatement(q);
                                                         pstmt.setInt(1, uid);
                                                         pstmt.setInt(2, start);
@@ -729,11 +732,11 @@ input[type=number] {
                                                     <td><%= resultSet.getString("servicing_at")%></td>
                                                     <td><%= resultSet.getString("km")%></td>
                                                     <td><%= resultSet.getString("amount")%></td>
-                                                    <td><%= resultSet.getString("full_name")%></td>     
+                                                    <td><%= resultSet.getString("mid")%></td>     
                                                     <td><%= resultSet.getString("parts_changed")%></td>                              
 
                                                 </tr>
- <% }
+                                                                  <% }
                                                                             String sql = "select count(*) from servicing_history";
                                                                             PreparedStatement stmt1 = con.prepareStatement(sql);
                                                                             ResultSet urs = stmt1.executeQuery();
@@ -934,7 +937,7 @@ input[type=number] {
                                                                                                 </div>
                                                                                                 <div class="col">
                                                                                                     <label  class="form-label">Model*</label>
-                                                                                                    <select placeholder='<%= bike.getString("model")%>'  id="output" class="form-control" onchange="bike_company()"   name="model" required > </select>
+                                                                                                    <select placeholder='<%= bike.getString("model")%>'  id="output" class="form-control" onchange="bike_company1()"   name="model" required > </select>
                                                                                                 </div>
                                                                                             </div>
                                                                                             <br>
@@ -1123,7 +1126,7 @@ input[type=number] {
                                                                             </div>
                                                                             <div class="col">
                                                                                 <label  class="form-label">Model*</label>
-                                                                                <select id="output" class="form-control" onchange="bike_company()" name="model" required > </select>
+                                                                                <select id="output" class="form-control" onchange="bike_company1()" name="model" required > </select>
                                                                             </div>
                                                                         </div>
                                                                         <br>

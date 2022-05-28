@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class BikeDao {
@@ -90,16 +91,14 @@ public class BikeDao {
         boolean f = false;
         try {
 
-            String query = "update bike set company=? , model=? , bike_img=? , color=? ,bike_num=?, updated_at = now(), cname=?, cemail=? where  bid =?";
+            String query = "update bike set company=? , model=? , bike_img=? , color=? ,bike_num=?, updated_at = now() where  bid =?";
             PreparedStatement p = con.prepareStatement(query);
             p.setString(1, bike.getCompany());
             p.setString(2, bike.getModel());
             p.setString(3, bike.getBike_img());
             p.setString(4, bike.getColor());
             p.setString(5, bike.getBike_num());
-            p.setString(6, bike.getCname());
-            p.setString(7, bike.getCemail());
-            p.setInt(8, bike.getBid());
+            p.setInt(6, bike.getBid());
             
             p.executeUpdate();
             f = true;
@@ -110,4 +109,67 @@ public class BikeDao {
         return f;
     }
     
+    
+     public Bike getBikeByBid(int bid) {
+        Bike bike = null;
+
+        try {
+            String query = "select * from bike where bid=?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, bid);
+
+            ResultSet set = pstmt.executeQuery();
+
+            if (set.next()) {
+            //int bid = set.getInt(uid);
+            
+            String company = set.getString("company"); 
+            String model = set.getString("model");
+            String bike_img = set.getString("bike_img");
+            String color = set.getString("color");
+            String bike_num = set.getString("bike_num");
+            Date created_at = set.getDate("created_at");
+            Date updated_at = set.getDate("updated_at");
+            String cname = set.getString("cname"); 
+            String cemail = set.getString("cemail");
+            int uid = set.getInt("uid");
+            
+            bike = new Bike(company, model, bike_img, color, bike_num,  created_at, uid, cname, cemail);
+
+            }
+
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        return bike;
+    }
+    
+     
+     
+       public boolean deleteBike(int bid) throws SQLException {
+		boolean rowDeleted = false;
+               
+		try{
+                        String qd = "delete from bike where bid = ?";
+                        PreparedStatement ps = this.con.prepareStatement(qd);
+			ps.setInt(1, bid);
+			ps.executeUpdate();
+                        rowDeleted = true;
+		}catch (Exception ed) {
+            ed.printStackTrace();
+        }
+		return rowDeleted;
+	}
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
 }

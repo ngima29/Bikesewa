@@ -30,7 +30,14 @@ input[type=number] {
     </head>
     
     <body>
-     
+     <div class="container">
+     <ul class="navbar list-unstyled">
+          <li class="logo">
+               <h2><a class="text-decoration-none" style="font-size:2rem; color:white; text-shadow: 2px 2px 6px #FF0000;" href="#"> Bike Sewa </a></h2>
+          </li>
+          
+     </ul>
+</div>
    <main class="d-flex align-items-center" style="height: 80vh" >
  <div class="container">
    <div class="row mx-auto">
@@ -51,16 +58,16 @@ input[type=number] {
         <input type="hidden"  value="<%= aid %>" name="aid" >
  <div class="row">
   <div class="col">
-      <input type="text" class="form-control" value="<%= a.getFull_name() %>" name="full_name"  required>
+      <input type="text" class="form-control" value="<%= a.getFull_name() %>" name="full_name" maxlength="20"  required>
   </div>
   <div class="col">
-    <input type="email" class="form-control" value="<%= a.getEmail() %>" name="email" required>
+    <input type="email" class="form-control" value="<%= a.getEmail() %>" name="email" maxlength="20" required>
   </div>
 </div>
          <br>
    <div class="row">
   <div class="col">
-    <input type="number" class="form-control" value="<%= a.getPhone() %>" name="phone" required>
+    <input type="number" class="form-control" value="<%= a.getPhone() %>" name="phone" onKeyPress="if (this.value.length == 10) return false;" required>
   </div>
   <div class="col">
    <select
@@ -83,13 +90,13 @@ input[type=number] {
     <input type="file" class="form-control" value="<%= a.getPhoto() %>" name="photo" required>
   </div>
   <div class="col">
-    <input type="password"  class="form-control" name="password" plceholder="Password" required>
+    <input type="password"  class="form-control" name="password" plceholder="Password" maxlength="8" required>
   </div>
 </div> 
 <br>
 <div class="row">
   <div class="col">
-    <input type="text" class="form-control" value="<%= a.getAddress() %>" name="address" required>
+    <input type="text" class="form-control" value="<%= a.getAddress() %>" name="address" maxlength="15" required>
   </div>
 </div> 
 <br>
@@ -100,7 +107,11 @@ input[type=number] {
         
 </form>
   </div>
+   <div class="modal-footer">
+    <a type="button" class="btn btn-secondary"  href="admin_dashboard.jsp"> Close </a>
+    </div>
 </div>
+  
 <!-- ???main -->
   </div>         
  </div>

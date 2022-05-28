@@ -192,11 +192,11 @@ function validateForm() {
  <div class="row">
   <div class="col">
     
-      <input type="text" class="form-control" placeholder="Full Name" name="user_name" autocomplete="off" maxlength="15"required>
+      <input type="text" class="form-control" placeholder="Full Name" name="user_name" autocomplete="off" maxlength="18"required>
       <span class="error text-danger font-weight-bold" id="nameErr"></span>
   </div>
   <div class="col">
-    <input type="email" class="form-control" placeholder="Email" name="user_email" autocomplete="off" required>
+    <input type="email" class="form-control" placeholder="Email" name="user_email" autocomplete="off" maxlength="20" required>
     <span class="error text-danger font-weight-bold" id="emailErr"></span>
   </div>
 </div>
@@ -227,7 +227,7 @@ function validateForm() {
     <span class="error text-danger font-weight-bold" id="addressErr"></span>
   </div>
   <div class="col">
-  <input type="password" class="form-control" placeholder="Password" name="user_password" autocomplete="off"  required>
+  <input type="password" class="form-control" placeholder="Password" name="user_password" autocomplete="off" maxlength="10" required>
 <!--    <span class="error text-danger font-weight-bold" id="passwordErr"></span>-->
   </div>
 </div>  
