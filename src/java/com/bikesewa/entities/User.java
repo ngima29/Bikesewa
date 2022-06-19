@@ -26,18 +26,22 @@ public class User {
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
+      public User(String password, Date updated_at, int id) {
+        this.password = password;
+        this.updated_at = updated_at;
+         this.uid = id;
+      }
 
-    public User(String full_name, String email, String phone, String gender, String address, String password , String image) {
+    public User(String full_name, String email, String phone, String gender, String address,  String password) {
         this.full_name = full_name;
         this.email = email;
         this.phone = phone;
         this.gender = gender;
         this.address = address;
         this.password = password;
-        this.image = image;
         
     }   
-        public User(String full_name, String email, String phone, String gender, String address, String password ) {
+        public User(String full_name, String email, String phone, String gender, String address, String password, String image ) {
         this.full_name = full_name;
         this.email = email;
         this.phone = phone;
@@ -45,6 +49,13 @@ public class User {
         this.address = address;
         this.password = password;
         this.image = image;
+    }
+        
+   public User(String name, String email, String pass) {
+              this.full_name = name;
+               this.email = email;
+              this.password = pass;
+             
     }
 
     public User() {

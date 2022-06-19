@@ -1,7 +1,7 @@
 
-package com.bikesewa.admin.servlets;
+package com.bikesewa.user.servlets;
 
-import com.bikesewa.dao.AddServicingHistoryDao;
+import com.bikesewa.dao.OnlinebookingDao;
 import com.bikesewa.entities.Message;
 import com.bikesewa.helper.ConnectionProvider;
 import java.io.IOException;
@@ -15,32 +15,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class DeleteServicingHservelt extends HttpServlet {
+public class CancelOnlineBookingServ extends HttpServlet {
 
+  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-               int sid = Integer.parseInt(request.getParameter("sid"));
-               AddServicingHistoryDao dao = new AddServicingHistoryDao(ConnectionProvider.getCon());
+        
+        int obid = Integer.parseInt(request.getParameter("obid"));
+        System.out.println(obid);
+               OnlinebookingDao obdao = new  OnlinebookingDao(ConnectionProvider.getCon());
+
               
                try {
-            if(dao.deleteServicingHistory(sid)){
-                 out.println("success fully delete servicing history");
-               Message msg = new Message("Delete Successfullty", "success", "alert-success");
+            if(obdao.CancelOnlineBooking(obid)){
+                 out.println("success fully cancel online booking ");
+               Message msg = new Message("Cancel Successfullty", "success", "alert-success");
                 HttpSession s = request.getSession();
                 s.setAttribute("msg", msg);
             }else{
-                Message msg = new Message("Sorry can't delete", "error", "alert alert-danger");
+                Message msg = new Message("Sorry can't Cancel ", "error", "alert alert-danger");
                 HttpSession s = request.getSession();
                 s.setAttribute("msg", msg);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DeleteServicingHservelt.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CancelOnlineBookingServ.class.getName()).log(Level.SEVERE, null, ex);
         }
     
-     response.sendRedirect("admin_dashboard.jsp");
-                
+     response.sendRedirect("user_dashboard.jsp");
+       
     }
- 
 
+    
 }

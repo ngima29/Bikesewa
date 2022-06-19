@@ -25,6 +25,7 @@ public class DeleteMechanic extends HttpServlet {
         
          int mid = Integer.parseInt(request.getParameter("mid"));
           MechanicDao mdao = new MechanicDao(ConnectionProvider.getCon());
+          
           Mechanics  mechanics = mdao.getMechanicsById(mid);
           String oldphoto =  mechanics.getPhoto();
           

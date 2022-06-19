@@ -17,24 +17,10 @@
         
   </head>
     
-    <body>
-        <!--navbae-->
-        <%--<%@include file="navbar.jsp" %>--%>
-        
-        
-       
+  <body class=" bg-light">
+
         <main class="d-flex align-items-center bg-light" >
  <div class="container-fluid">
-<!--      <nav class="navbar navbar-light bg-success mb-5 mt-1">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.jsp"  style="font-size:4rem; color:white; text-shadow: 2px 2px 8px #FF0000;">Bike Sewa</a>
-
-    <div class="d-flex">
-  <a class="btn btn-danger btn-lg" href="register.jsp" role="button">Register Now</a> 
-      </div>
-    
-      </div>
-      </nav>--> 
 
 <div class="container">
      <ul class="navbar list-unstyled">
@@ -55,7 +41,7 @@
            <div class="card-header bg-success text-white text-center">
               
                <i class="fa fa-user fa-3x" ></i>
-               <h1 class="d-flex justify-content-center">Login</h1>
+               <h2 class="d-flex justify-content-center">Login</h2>
                <br>
             </div>
            <!--jspppp-->
@@ -81,20 +67,27 @@
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" maxlength="18" required>
     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>
-  <div class="mb-3">
+  <div class="mb-2">
     <label for="exampleInputPassword1" class="form-label"><i class="fa fa-lock" > </i> Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" name="password" maxlength="10" required>
+    <input type="password" class="form-control" id="myInput" name="password" maxlength="10" required>
   </div>
-  <label class="form-check-label" for="gridCheck">
-        <a href="forgotPassword.jsp"> Forgot Password ? </a>
-      </label>
-      <br> <br>
+              <div class="mb-3 d-flex justify-content-between">
+                  <div>
+                      <input type="checkbox" onclick="myFunction()"> Show Password
+                  </div>
+                  <div>
+                      <a href="forgotPassword.jsp"> Forgot Password ? </a>
+                  </div>
+              </div>
+   
+              <br>
         <div class="d-flex ">         
   <button type="submit" class="btn btn-success me-5 ">Login</button>
   <a  href="register.jsp" class="btn btn-danger ms-5">Register</a>
         </div>
     
 </form>
+     
   </div>
 </div>
   </div>         
@@ -102,6 +95,16 @@
  </div>
       </main>
         
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
         
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

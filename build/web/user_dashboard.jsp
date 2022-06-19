@@ -111,14 +111,16 @@ input[type=number] {
                             </div>
                         </nav>
                         <div class="card-body ">
-                            <nav class="nav d-md-block  d-none mt-3">
-                                <button data-bs-toggle="tab" class="nav-link  mt-3 btn"  data-bs-target="#Dashboard"><i class="fa fa-dashboard me-2" style="font-size:36px"></i> Dashboard</button>
+                            <nav class="nav d-md-block  d-none ">
+                                
                                 <button data-bs-toggle="tab" class="nav-link active mt-3 btn" data-bs-target="#Profile" aria-current="page"  aria-selected="true"><i class=" fas fa fa-user-secret me-2" style="font-size:24px"></i>Profile</button>
                                 <button data-bs-toggle="tab" class="nav-link mt-3 btn" data-bs-target="#servicing" aria-selected="false"><i class="fas fa fa-gear me-2" style="font-size:24px" ></i>Servicing</button>
                                 <button data-bs-toggle="tab" class="nav-link mt-3 btn" data-bs-target="#Bike" aria-selected="false"><i class="fas fa fa-motorcycle me-2" style="font-size:24px"></i> My Bike </button>
                                 <button data-bs-toggle="tab"  class="nav-link mt-3 btn" data-bs-target="#ServicingHistory" aria-selected="false"><i class="fa fa-gears me-2" style="font-size:24px"></i> Servicing History</button>
                                 <button data-bs-toggle="tab"  class="nav-link mt-3 btn" data-bs-target="#UserFeedback" aria-selected="false"><i class="fa fa-commenting me-2" style="font-size:24px"></i> FeedBack </button>
-                                <div class=" row mt-5">
+                                <button data-bs-toggle="tab"  class="nav-link mt-3 btn" data-bs-target="#ChangePass" aria-selected="false"><i class="fa fa-lock me-2" style="font-size:24px"></i> Change Password </button>
+
+                                <div class=" row mt-4">
                                     <div class="col align-text-bottom d-flex justify-content-center">
                                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logout">
                                             <i class="fas fa fa-power-off me-2" style="font-size:24px"></i>Logout
@@ -425,22 +427,13 @@ input[type=number] {
                                                                       <input type="text" class="form-control" value="<%= user.getAddress()%>" name="address" autocomplete="off" maxlength="15" required>
                                                                       <span class="error text-danger font-weight-bold" id="addressErr"></span>
                                                                     </div>
-                                                                    <div class="col">
-                                                                      <span>Password</span>
-                                                                    <input type="password" class="form-control"  name="password" autocomplete="off" maxlength="10" required>
-                                                                    
-                                                                  <!--    <span class="error text-danger font-weight-bold" id="passwordErr"></span>-->
-                                                                    </div>
-                                                                  </div> 
-                                                     
-                                                                    <br>
-                                                                    <div class="row">
-                                                                        <div class="col">
+                                                                     <div class="col">
                                                                              <span>Image</span>
                                                                             <input type="file" class="form-control"  name="Update_photo" required>
                                                                         </div>
-
-                                                                    </div> 
+                                                                  </div> 
+                                                     
+                                                                   
                                                                     <br>
 
                                                                     <div class="d-flex ">         
@@ -490,7 +483,7 @@ input[type=number] {
                                                     int uid = user.getUid();
                                                     try {
                                                         Connection con = ConnectionProvider.getCon();
-                                                        String q2 = "select next_servicing, next_km from servicing_history where uid=? ORDER BY sid DESC LIMIT 1";
+                                                        String q2 = "select next_servicing, next_km from servicing_history where scid=? ORDER BY sid DESC LIMIT 1";
                                                         PreparedStatement pstmt = con.prepareStatement(q2);
                                                         pstmt.setInt(1, uid);
                                                         ResultSet resultSet = pstmt.executeQuery();
@@ -560,13 +553,13 @@ input[type=number] {
                                                 <table class="table bg-white rounded shadow-sm  table-hover">
                                             <thead>
                                                 <tr>
-                                                    
+                                                    <th scope="col"> ID </th> 
                                                     <th scope="col"> Date </th>
                                                     <th scope="col"> Booking Date</th>
                                                     <th scope="col"> Booking Time</th>
                                                     <th scope="col"> Problems </th>
                                                     <th scope="col"> Status </th>
-
+                                                    <th scope="col"> Action </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -581,6 +574,7 @@ input[type=number] {
                                                         while (resultSet.next()) {
                                                 %>
                                             <tr>
+                                            <td class="bookingC_id"><%= resultSet.getInt("obid")%></td> 
                                             <td> <%= resultSet.getString("created_at")%> </td>
                                             <td> <%= resultSet.getString("booking_date")%> </td>
                                             <td>  <%= resultSet.getString("booking_time")%>  </td>
@@ -597,6 +591,7 @@ input[type=number] {
                                                     <a href="#" type="button" disabled class="btn btn-danger btn-sm">Rejected</a>   
                                                     <%}%>
                                                 </td>   
+                                                <td> <button type="button" class="btn btn-warning btn-sm booking_id " data-bs-toggle="modal" data-bs-target="#bookingdelete"> Cancel </button></td>
                                             </tr>
 
                                             <% }
@@ -610,7 +605,26 @@ input[type=number] {
                                     </div>
                                     <!--online booking details display end-->
                                    </div>
+                                        <!--booking delete code start-->
+                                        <div class="modal fade" id="bookingdelete" tabindex="-1" aria-labelledby="albookingdelete" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="CancelOnlineBookingServ" method="Get"> 
+										
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="bookingdelete">Do you want to Cancel?</h5>
+                                            <input type="hidden" name="obid" id="pass_ob_id">
                                         
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                             <button type="submit" class="btn btn-danger" >Yes</button>
+                                        </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                                        <!--booking delete code end-->
                                         
                            <!--online booking details  end-->
                             <!-- servicing booking Button trigger modal -->
@@ -697,7 +711,21 @@ input[type=number] {
                             <div class="tab-pane fade " id="ServicingHistory">
                                 <!-- <h1>Servicing History</h1> -->
                                 <div class="row my-5">
-                                    <h3 class=" mb-3">Servicing History</h3>
+                                    <div class=" my-3 d-flex w-75 h-75 justify-content-start">
+                                        <div>
+                                             <h3 class=" me-3">Servicing History</h3>
+                                        </div>
+                                         <div>
+                                                                <input
+                                                                    type="text"
+                                                                    placeholder="Search Here "
+                                                                    class="form-control"
+                                                                    id="ServHisSerInp"
+                                                                    />
+                                                                
+                                                            </div>
+                                    </div>
+                                   
                                     <div class="col">
                                         <table class="table bg-white rounded shadow-sm  table-hover">
                                             <thead>
@@ -710,7 +738,7 @@ input[type=number] {
                                                     <th scope="col">Parts Changed</th>                                    
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id='ServHisSertbl'>
                                                 <%
                                                      int Total = 0;
                                                      int start = 0, recordCount = 6;
@@ -817,11 +845,54 @@ input[type=number] {
 
 
                             </div>
-                            <!--User Feed Back end-->        
+                            <!--User Feed Back end--> 
+                            
+                            <!--User password change start-->
+                            <div class="tab-pane fade " id="ChangePass">
+
+                                <div class="row">
+                                    <div class="col-md-6 offset-md-2">
+                                        <!-- maila -->
+                                        <div class="card" >
+                                            <div class="card-header bg-success text-white">
+                                                <h3 >change password</h3>
+                                                
+                                            </div>
+                                            <div class="card-body">
+                                                <form action="UserPassChange" method="POST">
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><i class="fa fa-unlock"></i> current password</label>
+                                                        <input type="password" class="form-control" name="currPass" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><i class="fa fa-unlock-alt"></i> new password</label>
+                                                        <input type="password" class="form-control"  id="txtNewPassword"  name="newpass"required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label  class="form-label"><i class="fa fa-lock"></i> confirm  password</label>
+                                                         <input type="password" class="form-control" id="txtConfirmPassword" name="confpass" required>
+
+                                                    </div>
+                                                    <div class="registrationFormAlert"  id="CheckPasswordMatch"> </div>
+                                                    <br>
+                                                    <input type="hidden" value="<%= user.getUid()%>" name="uid">
+
+                                                    <div class="d-flex ">         
+                                                        <button type="submit" class="btn btn-success me-5 ">Submit</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- maila -->
+                                    </div>         
+                                </div>   
 
 
-                            <!-- Servicing end  -->
+                            </div>
+                            <!--user password change end-->
 
+                         
                             <!-- my bike start   -->
                             <div class="tab-pane fade " id="Bike">
 
@@ -1343,7 +1414,43 @@ input[type=number] {
         </div>-->
 
 
+        <script>
+             function checkPasswordMatch() {
+        var password = $("#txtNewPassword").val();
+        var confirmPassword = $("#txtConfirmPassword").val();
+        if (password !== confirmPassword)
+            $("#CheckPasswordMatch").html("Passwords does not match!!").css("color","red");
+        else
+            $("#CheckPasswordMatch").html("Passwords match.").css("color","green");
+    }
+            
+             $(document).ready(function () {
+//                 check new and confirm password
+                         $("#txtConfirmPassword").keyup(checkPasswordMatch);
 
+                             
+//                             search jqury code for servicing history  table 
+                                          $('#ServHisSerInp').on("keyup", function(){
+                                              var serHvalue = $(this).val().toLowerCase();
+                                               $('#ServHisSertbl  tr').filter(function(){
+                                                  $(this).toggle($(this).text().toLowerCase().indexOf(serHvalue)> -1); 
+                                               });
+                                          });
+                                          
+//                                 cancel jqury code
+                                    
+                                     $('.booking_id').click(function (e){
+                                             e.preventDefault();
+                                             
+                                             var b_id = $(this).closest('tr').find('.bookingC_id').text();
+                                             
+                                             $('#pass_ob_id').val(b_id);
+                                             $('#bookingdelete').modal('show');
+                                         
+                                         });
+                                    
+            });
+        </script>
 
 
 

@@ -22,8 +22,16 @@
   </head>
     
     <body>
+        <div class="container">
+     <ul class="navbar list-unstyled">
+          <li class="logo">
+               <h2><a class="text-decoration-none" style="font-size:2rem; color:white; text-shadow: 2px 2px 6px #FF0000;" href="#"> Bike Sewa </a></h2>
+          </li>
+          
+     </ul>
+</div>
        
-<main class="d-flex align-items-center" style="height: 80vh">
+<main class="d-flex align-items-center" style="height: 70vh">
  <div class="container">
 
    <div class="row mt-5">
@@ -40,7 +48,7 @@
                    UserDao udo = new UserDao(ConnectionProvider.getCon());
                    User u = udo.getUserByUserId(uid);
                %>
-          <form action="AddServicingHistory" method="POST">
+          <form action="DashboardAddServicingHistoryServ" method="POST">
 
   <div class="mb-3">
     <label  class="form-label"> Amount*</label>
@@ -61,8 +69,9 @@
   </div>
      <input type="hidden"  value="<%= b.getBike_num() %>" name="bikeNum"  >
      <input type="hidden"  value="<%= b.getBid() %>" name="bid"  >
-    <input type="hidden" value="<%= u.getFull_name() %>" name="scneme">
+    <input type="hidden" value="<%= u.getFull_name() %>" name="cname">
     <input type="hidden" value="<%= u.getEmail() %>" name="scemail">
+     <input type="hidden" value="<%= u.getUid() %>" name="cid">
   
    
  
@@ -74,6 +83,9 @@
     
 </form>
   </div>
+    <div class="modal-footer">
+    <a type="button" class="btn btn-secondary"  href="admin_dashboard.jsp"> Close </a>
+    </div>
 </div>
   </div>         
  </div>

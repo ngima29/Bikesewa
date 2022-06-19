@@ -40,12 +40,9 @@
         <div class="left box">
           <h2>About us</h2>
           <div class="content">
-            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            <p> Bike Sewa is web application where user can book there bike servicing 
+                through online and can view old servicing records like parts changed, km,
+                amount etc using this application user also can view their next servicing date or km.  </p>
             <div class="social">
               <a href="#"><span class="fab fa-facebook-f"></span></a>
               <a href="#"><span class="fab fa-twitter"></span></a>
@@ -68,7 +65,7 @@
             </div>
             <div class="email">
               <span class="fas fa-envelope"></span>
-              <span class="text">abc@example.com</span>
+              <span class="text">bikeSewa@gmail.com</span>
             </div>
           </div>
         </div>

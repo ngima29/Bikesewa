@@ -72,5 +72,38 @@ public class OnlinebookingDao {
         }
         return f;
     }
+    
+    
+    
+     public boolean deleteAcceptBooking(int scid) throws SQLException {
+		boolean rowDeleted = false;
+               
+		try{
+                        String qd = "delete from onlinebooking where booking_status = '1' AND  uid = ?";
+                        PreparedStatement ps = this.con.prepareStatement(qd);
+			ps.setInt(1, scid);
+			ps.executeUpdate();
+                        rowDeleted = true;
+		}catch (Exception ed) {
+            ed.printStackTrace();
+        }
+		return rowDeleted;
+	}
+     
+     
+     public boolean CancelOnlineBooking(int obid) throws SQLException {
+		boolean rd = false;
+               
+		try{
+                        String qc = "delete from onlinebooking where booking_status IS NULL AND  obid = 11;";
+                        PreparedStatement prs = this.con.prepareStatement(qc);
+			prs.setInt(1, obid);
+			prs.executeUpdate();
+                        rd = true;
+		}catch (Exception ed) {
+            ed.printStackTrace();
+        }
+		return rd;
+	}
 
 }

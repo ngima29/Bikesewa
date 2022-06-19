@@ -23,14 +23,27 @@
         
         
        
-        <main class="d-flex align-items-center" style="height: 80vh">
- <div class="container">
+        <main class="d-flex align-items-center" style="height: 60vh">
+ <div class="container-fluid">
+     <div class="container ">
+     <ul class="navbar list-unstyled">
+          <li class="logo">
+               <h2><a class="text-decoration-none" style="font-size:4rem; color:white; text-shadow: 2px 2px 8px #FF0000;" href="index.jsp"> Bike Sewa </a></h2>
+          </li>
+          <li>
+                <div class="d-flex">
+
+    <a class="btn btn-danger btn-lg" href="login.jsp" role="button"> Login</a> 
+      </div>
+          </li>
+     </ul>
+</div>
    <div class="row">
      <div class="col-md-4 offset-md-4">
        <div class="card" >
            <div class="card-header bg-success text-white text-center">
              
-               <h4 class="d-flex justify-content-center">Forgot Password ?</h4>
+               <h4 class="d-flex justify-content-center">Forgot Password </h4>
                <br>
             </div>
            <!--jspppp-->
@@ -51,23 +64,15 @@
           <!--login####-->
           
           <form action="ForgotPass" method="POST">
-  <div class="mb-3">
+       <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label"><i class="fa fa-envelope-o" ></i> Email</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required>
+    <input type="email" class="form-control"  name="email" maxlength="18" required>
+    <div id="emailHelp" class="form-text">We'll send your password to  your email </div>
   </div>
-     <div class="mb-3">
-    <label for="phonenumber" class="form-label"><i class="fa fa-envelope-o" ></i> Phone</label>
-    <input type="number" class="form-control" id="phonenumber"  name="phone" required>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label"><i class="fa fa-lock" > </i>New Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" name="newpassword" required>
-  </div>
-
-      <br> <br>
+ 
         <div class="d-flex ">         
   <button type="submit" class="btn btn-success me-5 ">Submit</button>
-  <a  href="login.jsp" class="btn btn-danger ms-5">Login</a>
+
         </div>
     
 </form>

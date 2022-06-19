@@ -1,5 +1,7 @@
 
 
+<%@page import="com.bikesewa.entities.Servicinghistory"%>
+<%@page import="com.bikesewa.dao.AddServicingHistoryDao"%>
 <%@page import="com.bikesewa.entities.Admin"%>
 <%@page import="com.bikesewa.helper.ConnectionProvider"%>
 <%@page import="com.bikesewa.dao.AdminDao"%>
@@ -51,7 +53,13 @@ input[type=number] {
          <!--?####FORM-->
                                                                                 <div class="card-body">
                                                                                     <!--?####FORM-->
-                                                                                    <form action="AddServicingHistory" method="POST">
+                                                                                    <form action="UpdateServicingServlet" method="POST">
+                                                                                        <% 
+                                                                                int sid = Integer.parseInt(request.getParameter("sid")); 
+                                                                                AddServicingHistoryDao asdao = new AddServicingHistoryDao(ConnectionProvider.getCon());
+                                                                                Servicinghistory sh= asdao.getServicinghistoryById(sid);
+                                                                            %>
+                                                                            <input type="hidden"  value="<%= sid %>" name="sid" >
                                                                                         <div class="row">
                                                                                             <div class="col">
                                                                                                 <label class="form-label"
@@ -60,7 +68,7 @@ input[type=number] {
                                                                                                 <input
                                                                                                     type="text"
                                                                                                     class="form-control"
-                                                                                                    
+                                                                                                    value="<%= sh.getBike_num() %>" 
                                                                                                     name="bikeNum" maxlength="20"
                                                                                                     required
                                                                                                     />
@@ -70,7 +78,7 @@ input[type=number] {
                                                                                                 <input
                                                                                                     type="number"
                                                                                                     class="form-control"
-                                                                                                    
+                                                                                                     value="<%= sh.getAmount() %>" 
                                                                                                     name="amount"
                                                                                                     required onKeyPress="if (this.value.length == 6) return false;"
  
@@ -84,7 +92,7 @@ input[type=number] {
                                                                                                 <input
                                                                                                     type="number"
                                                                                                     class="form-control"
-                                                                                                   
+                                                                                                    value="<%= sh.getKm() %>" 
                                                                                                     name="Km"
                                                                                                     required onKeyPress="if (this.value.length == 5) return false;"
 
@@ -97,7 +105,7 @@ input[type=number] {
                                                                                                 <input
                                                                                                     type="text"
                                                                                                     class="form-control"
-                                                                                                    
+                                                                                                     value="<%= sh.getScname() %>" 
                                                                                                     name="cname"
                                                                                                     required  maxlength="15" 
                                                                                                     />
@@ -116,6 +124,7 @@ input[type=number] {
                                                                                                         class="form-control"
                                                                                                        onKeyPress="if (this.value.length == 4) return false;"
                                                                                                         name="cid"
+                                                                                                         value="<%= sh.getScid() %>" 
                                                                                                         required  
                                                                                                         />
                                                                                                 </div>
@@ -126,7 +135,7 @@ input[type=number] {
                                                                                                     <input
                                                                                                         type="number"
                                                                                                         class="form-control"
-                                                                                                        
+                                                                                                         value="<%= sh.getMid() %>" 
                                                                                                         name="mid"
                                                                                                         required onKeyPress="if (this.value.length == 2) return false;"
                                                                                                         />
@@ -140,9 +149,9 @@ input[type=number] {
                                                                                                     name="partsChange"
                                                                                                     rows="4"
                                                                                                     cols="25"
-                                                                                                    required
-                                                                                                    maxlength="50"
-                                                                                                    ></textarea>
+                                                                                                     
+                                                                                                     required
+                                                                                                    maxlength="50"> <%= sh.getParts_changed() %> </textarea>
                                                                                             </div>
                                                                                         </div>
                                                                                         <br />
@@ -157,6 +166,9 @@ input[type=number] {
                                                                                         </div>
                                                                                     </form>
                                                                                 </div>
+                                                                                                     <div class="modal-footer">
+    <a type="button" class="btn btn-secondary"  href="admin_dashboard.jsp"> Close </a>
+    </div>
                                                                          
 <!-- ???main -->
        

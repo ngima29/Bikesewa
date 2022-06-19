@@ -116,6 +116,22 @@
         <servlet-name>DeleteServicingHservelt</servlet-name>
         <servlet-class>com.bikesewa.admin.servlets.DeleteServicingHservelt</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserPassChange</servlet-name>
+        <servlet-class>com.bikesewa.user.servlets.UserPassChange</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateServicingServlet</servlet-name>
+        <servlet-class>com.bikesewa.admin.servlets.UpdateServicingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardAddServicingHistoryServ</servlet-name>
+        <servlet-class>com.bikesewa.admin.servlets.DashboardAddServicingHistoryServ</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelOnlineBookingServ</servlet-name>
+        <servlet-class>com.bikesewa.user.servlets.CancelOnlineBookingServ</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -231,6 +247,22 @@
     <servlet-mapping>
         <servlet-name>DeleteServicingHservelt</servlet-name>
         <url-pattern>/DeleteServicingHservelt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserPassChange</servlet-name>
+        <url-pattern>/UserPassChange</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateServicingServlet</servlet-name>
+        <url-pattern>/UpdateServicingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardAddServicingHistoryServ</servlet-name>
+        <url-pattern>/DashboardAddServicingHistoryServ</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelOnlineBookingServ</servlet-name>
+        <url-pattern>/CancelOnlineBookingServ</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

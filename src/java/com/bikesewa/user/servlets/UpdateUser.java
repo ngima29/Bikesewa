@@ -32,7 +32,7 @@ public class UpdateUser extends HttpServlet {
                 String phone = request.getParameter("phone");
                 String gender = request.getParameter("gender");
                 String address = request.getParameter("address");
-                String password = request.getParameter("password");
+             
                 
                 Part part = request.getPart("Update_photo");
                 String imageName = part.getSubmittedFileName();
@@ -45,8 +45,7 @@ public class UpdateUser extends HttpServlet {
             user.setPhone(phone);
             user.setGender(gender);
             user.setAddress(address);
-            user.setPassword(password);
-            
+           
             //getting old image
            String oldfile = user.getImage();
            //set new image

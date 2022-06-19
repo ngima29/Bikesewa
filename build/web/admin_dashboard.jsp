@@ -92,7 +92,7 @@ input[type=number] {
 
                                     <!-- left side navbar start  -->
                                     <div class="col-lg-3 col-md-4 d-md-block">
-                                        <div class="card card-left bg-light text-white" style="height: 90vh">
+                                        <div class="card card-left bg-light text-white" style="height: 100vh">
                                             <nav class="navbar navbar-light bg-light">
                                                 <div class="container-fluid">
                                                     <a class="navbar-brand" href="#" style="font-size:2rem; color:white; text-shadow: 2px 2px 8px #FF0000;">
@@ -411,10 +411,21 @@ input[type=number] {
                                                         <!--admin and confirm bookinr end-->
                                                     </div>
                                                     <!-- accepted booking dashboard -->
-                                                    <div class="rowmt-2">
-                                                        
-                                                        <h4 class="mt-3 fw-bolder">Accepted Booking</h4>
+                                                    <div class="mt-3  d-flex w-75 h-75 justify-content-start">
+                                                        <div>
+                                                         <h4 class=" fw-bolder me-3 align-top">Accepted Booking</h4>
                                                     </div>
+                                                        <div>
+                                                                <input
+                                                                    type="text"
+                                                                    placeholder="Search Here "
+                                                                    class="form-control  h-76"
+                                                                    id="acbSerInp"
+                                                                    />
+                                                                
+                                                            </div>
+                                                    </div>
+                                                    
                                                     <br />
                                                     <div class="row">
                                                         <table
@@ -432,10 +443,10 @@ input[type=number] {
                                                                     <th scope="col">Action</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody id='acbSertbl'>
                                                                 <%
                                                                     int dabTotal = 0;
-                                                                        int dabstart = 0, dabrecordCount = 3;
+                                                                        int dabstart = 0, dabrecordCount = 2;
                                                                     try {
                                                                          int dabpgno = request.getParameter("dabpgno") == null ? 0 : Integer.parseInt(request.getParameter("dabpgno"));
                                                                             dabstart = dabpgno * dabrecordCount;
@@ -515,25 +526,27 @@ input[type=number] {
                                                     >
                                                     <div class="row">
                                                         <h3 class="mb-3">Customers</h3>
-                                                        <div class="mb-3">
+                                                        <div class="mb-3 my-3 d-flex w-75 h-75 justify-content-start">
                                                             <!-- // add update delete start -->
-                                                            <button
+                                                            <div>
+                                                                <button
                                                                 type="button"
-                                                                class="btn btn-success"
+                                                                class="btn btn-success me-2"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#addCustomer"
                                                                 >
                                                                 Add New
                                                             </button>
-                                                            <div class="mt-2">
-                                                            <form action="" method="get">
-                                                                <input
+                                                            </div>
+                                                            <div>
+                                                             <input
                                                                     type="text"
                                                                     placeholder="Search Here"
                                                                     class="form-control"
                                                                     name="custSearch"
+                                                                    id="cusSerInput"
                                                                     />
-                                                            </form>
+                                                            
                                                                 </div>
                                                             <!--  customer Button trigger modal  start-->
 
@@ -810,7 +823,7 @@ input[type=number] {
                                                                         <th scope="col">Action</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody id="cusSertbl">
                                                                     <% int Total = 0;
                                                                         int start = 0, recordCount = 6;
                                                                         try {
@@ -912,11 +925,22 @@ input[type=number] {
                                                     role="tabpanel"
                                                     aria-labelledby="v-pills-online-booking-tab"
                                                     >
-                                                    <div class="row">
+                                                    <div class="row mb-3">
                                                         <h1>Online Booking</h1>
                                                     </div>
-                                                    <br />
-                                                    <br />
+                                           <div class=" my-3 d-flex w-75 h-75 justify-content-start">
+                                                            <div>
+                                                               <input
+                                                                    type="text"
+                                                                    placeholder="Search Here"
+                                                                    class="form-control table-responsive"
+                                                                     id="obSerInp"
+                                                                    />
+                                                                
+                                                            </div>
+                                                        
+                                                                </div>
+                                                 
                                                     <div class="row">
                                                         <table
                                                             class="table bg-white rounded shadow-sm table-hover table-responsive"
@@ -933,7 +957,7 @@ input[type=number] {
                                                                     <th scope="col">Action</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody id="obSertbl">
                                                                 <%
                                                                     int obtotal = 0;
                                                                     int obstart = 0, obrecordCount = 4;
@@ -1041,25 +1065,10 @@ input[type=number] {
                                                     >
                                                     <div class="row">
                                                         <h3 class="mb-3">Bike Details</h3>
-                                                        <div class="mb-3">
+                                                        <div class=" d-flex w-75 h-75 justify-content-start">
                                                             <!-- add update delete start -->
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-success"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#addBike"
-                                                                >
-                                                                Add New Bike
-                                                            </button>
-<!--                                                            <button
-                                                                type="button"
-                                                                class="btn btn-danger"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#deleteBike"
-                                                                >
-                                                                Delete
-                                                            </button>-->
-
+                                                           
+<!--                                                            
                                                             <!-- Add Mechanic Button trigger modal  start-->
 
                                                             <div
@@ -1291,9 +1300,28 @@ input[type=number] {
                                                             </div>
                                                             <!-- delete trigger button end -->
                                                             <!-- // add update delete end -->
+                                                            <div>
+                                                                 <button
+                                                                type="button"
+                                                                class="btn btn-success me-2"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#addBike"
+                                                                >
+                                                                Add New Bike
+                                                            </button>
+                                                            </div>
+                                                            <div>
+                                                              <input
+                                                                    type="text"
+                                                                    placeholder="Search Here"
+                                                                    class="form-control"
+                                                                    id="bikeSerInput"
+                                                                    />
+                                                             </div>
                                                         </div>
-                                                        <br />
+                                      
                                                         <div class="col">
+                                                             <br> 
                                                             <table class="table bg-white rounded shadow-sm table-hover">
                                                                 <thead>
                                                                     <tr>
@@ -1309,7 +1337,7 @@ input[type=number] {
                                                                         <th scope="col">Action</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody id="bikeSertbl">
                                                                     <% try {
                                                                             Connection con = ConnectionProvider.getCon();
                                                                             Statement statement = con.createStatement();
@@ -1389,32 +1417,8 @@ input[type=number] {
                                                     >
                                                     <div class="row">
                                                         <h3 class="mb-3">Servicing History</h3>
-                                                        <div class="mb-3">
-                                                            <!-- // add update delete start -->
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-success"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#addServicing"
-                                                                >
-                                                                Add Servicing
-                                                            </button>
-<!--                                                            <button
-                                                                type="button"
-                                                                class="btn btn-warning mx-3 btn-sm"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#updateServicing"
-                                                                >
-                                                                Update
-                                                            </button>
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-danger"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#deleteServicing"
-                                                                >
-                                                                Delete
-                                                            </button>-->
+                                                        <div class="mb-3 d-flex w-75 h-75 justify-content-start">
+                                                           
 
                                                             <!-- Add servicing Button trigger modal  start-->
 
@@ -1771,8 +1775,29 @@ input[type=number] {
                                                             </div>
                                                             <!-- delete servicing history trigger button end -->
                                                             <!-- // add update delete end -->
+                                                            
+                                                            <div>
+                                                                <button
+                                                                type="button"
+                                                                class="btn btn-success me-2"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#addServicing"
+                                                                >
+                                                                Add Servicing
+                                                            </button>
+                                                            </div>
+                                                             <div >
+                                                         <input
+                                                                    type="text"
+                                                                    placeholder="Search Here"
+                                                                    class="form-control"
+                                                                    id="servcSerInp"
+                                                                    />
+                                                                
+                                                                </div>
                                                         </div>
-                                                        <br />
+                                                       
+                                                        
                                                         <div class="row">
                                                             <table class="table bg-white table-hover">
                                                                 <thead>
@@ -1790,7 +1815,7 @@ input[type=number] {
                                                                         <th scope="col">Action</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody id="servcSertbl">
                                                                     <% try {
                                                                             Connection con = ConnectionProvider.getCon();
                                                                             String q2 = "select * from servicing_history ORDER BY sid DESC; ";
@@ -1862,7 +1887,19 @@ input[type=number] {
                                                     aria-labelledby="v-pills-feedback-tab"
                                                     >
                                                     <div class="row">
-                                                        <h3 class="mb-3">User Feedback</h3>
+                                                        <h3 class="">User Feedback</h3>
+                                                        <div class=" my-3 d-flex w-75 h-75 justify-content-start">
+                                                            <div>
+                                                                <input
+                                                                    type="text"
+                                                                    placeholder="Search Here "
+                                                                    class="form-control"
+                                                                    id="feedbSerInp"
+                                                                    />
+                                                                
+                                                            </div>
+                                                        
+                                                                </div>
                                                         <div class="mb-3">
                                                             <div class="row">
                                                                 <table class="table bg-white rounded shadow-sm table-hover">
@@ -1877,7 +1914,7 @@ input[type=number] {
                                                                             <th scope="col">Action</th>
                                                                         </tr>
                                                                     </thead>
-                                                                    <tbody>
+                                                                    <tbody id="feedbSertbl">
                                                                         <% 
                                                                             int fTotal = 0;
                                                                         int fstart = 0, frecordCount = 6;
@@ -1952,17 +1989,10 @@ input[type=number] {
                                                     aria-labelledby="v-pills-mechanics-tab"
                                                     >
                                                     <div class="row">
-                                                        <h3 class="mb-3">Mechanics Details</h3>
-                                                        <div class="mb-3">
+                                                        <h3 class="mb-1">Mechanics Details</h3>
+                                                        <div class="my-2">
                                                             <!-- // add update delete start -->
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-success"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#addMechanic"
-                                                                >
-                                                                Add New
-                                                            </button>
+                                                           
 
                                                             <!-- Add Mechanic Button trigger modal  start-->
 
@@ -2109,8 +2139,31 @@ input[type=number] {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <br />
+                                                        
+                                                        <div class="d-flex w-75 h-75 justify-content-start">
+                                                        <div>
+                                                             <button
+                                                                type="button"
+                                                                class="btn btn-success me-2"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#addMechanic"
+                                                                >
+                                                                Add New
+                                                            </button>
+                                                        </div>
+                                                        <div>
+                                                        <input
+                                                                    type="text"
+                                                                    placeholder="Search Here"
+                                                                    class="form-control"
+                                                                    id="mecSerInp"
+                                                                    />
+                                                           </div>
+                                                               <br />   <br />
+                                                            </div>
+                                                        
                                                         <div class="row">
+                                                           
                                                             <table class="table bg-white rounded shadow-sm table-hover">
                                                                 <thead>
                                                                     <tr>
@@ -2126,7 +2179,7 @@ input[type=number] {
                                                                         <th scope="col">Action</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody id="mecSertbl" >
                                                                     <% 
                                                                          int mTotal = 0;
                                                                         int mstart = 0, mrecordCount = 6;
@@ -2234,14 +2287,27 @@ input[type=number] {
                                                         <h3 class="mb-3">Admin Details</h3>
                                                         <div class="mb-3">
                                                             <!-- // add admin start -->
-                                                            <button
+                                                            <div class="d-flex w-75 h-75 justify-content-start">
+                                                                <div>
+                                                                    <button
                                                                 type="button"
-                                                                class="btn btn-success"
+                                                                class="btn btn-success me-2"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#addAdmin"
-                                                                >
-                                                                Add New
-                                                            </button>
+                                                                >Add New</button>
+                                                                </div> 
+                                                            
+                                                                <div>
+                                                                  <input
+                                                                    type="text"
+                                                                    placeholder="Search Here"
+                                                                    class="form-control"
+                                                                    id="admSerInp"
+                                                                    />  
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            	
 
                                                             <div
                                                                 class="modal fade"
@@ -2261,6 +2327,7 @@ input[type=number] {
                                                                                     <h4 class="d-flex justify-content-center">
                                                                                         Add Admin
                                                                                     </h4>
+                                                                                    
                                                                                 </div>
                                                                                 <div class="card-body">
                                                                                     <!--?####FORM-->
@@ -2401,7 +2468,7 @@ input[type=number] {
                                                                         <th scope="col">Action</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody id="admSertbl" >
                                                                     <% 
                                                                         int adTotal = 0;
                                                                         int adstart = 0, adrecordCount = 6;
@@ -2626,6 +2693,72 @@ input[type=number] {
                                              $('#serdelete').modal('show');
                                          
                                          });
+                                         
+                                         
+//                             search jqury code for accepted booking table 
+                                          $('#acbSerInp').on("keyup", function(){
+                                              var acbvalue = $(this).val().toLowerCase();
+                                               $('#acbSertbl  tr').filter(function(){
+                                                  $(this).toggle($(this).text().toLowerCase().indexOf(acbvalue)> -1); 
+                                               });
+                                          });             
+                                         
+                                         
+ //                       search jqury code for customer table 
+                                          $('#cusSerInput').on("keyup", function(){
+                                              var cusvalue = $(this).val().toLowerCase();
+                                               $('#cusSertbl tr').filter(function(){
+                                                  $(this).toggle($(this).text().toLowerCase().indexOf(cusvalue)> -1); 
+                                               });
+                                          });
+                                          
+  //                       search jqury code for online booking  table 
+                                          $('#obSerInp').on("keyup", function(){
+                                              var obvalue = $(this).val().toLowerCase();
+                                               $('#obSertbl tr').filter(function(){
+                                                  $(this).toggle($(this).text().toLowerCase().indexOf(obvalue)> -1); 
+                                               });
+                                          });  
+                                          
+  //                       search jqury code for bike table 
+                                          $('#bikeSerInput').on("keyup", function(){
+                                              var bikevalue = $(this).val().toLowerCase();
+                                               $('#bikeSertbl tr').filter(function(){
+                                                  $(this).toggle($(this).text().toLowerCase().indexOf(bikevalue)> -1); 
+                                               });
+                                          });  
+        //                       search jqury code for servicing history table 
+                                          $('#servcSerInp').on("keyup", function(){
+                                              var servicvalue = $(this).val().toLowerCase();
+                                               $('#servcSertbl tr').filter(function(){
+                                                  $(this).toggle($(this).text().toLowerCase().indexOf(servicvalue)> -1); 
+                                               });
+                                          });  
+        //                       search jqury code for Feedback table 
+                                          $('#feedbSerInp').on("keyup", function(){
+                                              var fbvalue = $(this).val().toLowerCase();
+                                               $('#feedbSertbl tr').filter(function(){
+                                                  $(this).toggle($(this).text().toLowerCase().indexOf(fbvalue)> -1); 
+                                               });
+                                          });  
+         //                       search jqury code for mechanic table 
+                                          $('#mecSerInp').on("keyup", function(){
+                                              var mvalue = $(this).val().toLowerCase();
+                                               $('#mecSertbl tr').filter(function(){
+                                                  $(this).toggle($(this).text().toLowerCase().indexOf(mvalue)> -1); 
+                                               });
+                                          });  
+      //                       search jqury code for admin table 
+                                          $('#admSerInp').on("keyup", function(){
+                                              var avalue = $(this).val().toLowerCase();
+                                               $('#admSertbl tr').filter(function(){
+                                                  $(this).toggle($(this).text().toLowerCase().indexOf(avalue)> -1); 
+                                               });
+                                          });  
+                                         
+                                         
+                                         
+                                         
                                          
                                     });
                                 </script>
